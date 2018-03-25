@@ -1,0 +1,12 @@
+D:\C\TR_DDOS\TR_DDOS\bin\Release\TR_DDOS.exe.config
+D:\C\TR_DDOS\TR_DDOS\bin\Release\TR_DDOS.exe
+D:\C\TR_DDOS\TR_DDOS\bin\Release\TR_DDOS.pdb
+D:\C\TR_DDOS\TR_DDOS\obj\Release\TR_DDOS.exe
+D:\C\TR_DDOS\TR_DDOS\obj\Release\TR_DDOS.pdb
+D:\C\TR_DDOS\TR_DDOS\obj\Release\TR_DDOS.csprojResolveAssemblyReference.cache
+D:\TR Hacker\TR_DDOS\TR_DDOS\bin\Release\TR_DDOS.exe.config
+D:\TR Hacker\TR_DDOS\TR_DDOS\bin\Release\TR_DDOS.exe
+D:\TR Hacker\TR_DDOS\TR_DDOS\bin\Release\TR_DDOS.pdb
+D:\TR Hacker\TR_DDOS\TR_DDOS\obj\Release\TR_DDOS.csprojResolveAssemblyReference.cache
+D:\TR Hacker\TR_DDOS\TR_DDOS\obj\Release\TR_DDOS.exe
+D:\TR Hacker\TR_DDOS\TR_DDOS\obj\Release\TR_DDOS.pdb

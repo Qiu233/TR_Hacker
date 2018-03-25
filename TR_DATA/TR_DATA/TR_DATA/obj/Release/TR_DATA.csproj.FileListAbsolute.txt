@@ -1,0 +1,5 @@
+D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\bin\Release\TR_DATA.exe
+D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Release\TR_DATA.csprojResolveAssemblyReference.cache
+D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Release\TR_DATA.Resource1.resources
+D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Release\TR_DATA.csproj.GenerateResource.Cache
+D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Release\TR_DATA.exe

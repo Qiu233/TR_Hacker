@@ -1,0 +1,59 @@
+# depslib dependency file v1.0
+1468427086 source:c:\users\qiu\desktop\tr_hacker_baseaddr\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<tlhelp32.h>
+	<iostream>
+	<psapi.h>
+	<vector>
+
+1468642508 source:f:\tr_hacker\main.cpp
+	"Func.h"
+
+1470127716 f:\tr_hacker\func.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<tlhelp32.h>
+	<tchar.h>
+	<wchar.h>
+	<locale.h>
+
+1468592531 f:\tr_hacker\inject.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<tlhelp32.h>
+
+1469760506 source:f:\tr_hacker\main.c
+	"Func.h"
+
+1469156934 source:f:\tr_hacker\func.c
+	"Func.h"
+
+1485521390 source:d:\tr hacker\tr_hacker_dll\main.c
+	"Func.h"
+
+1500020527 d:\tr hacker\tr_hacker_dll\func.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<tlhelp32.h>
+	<tchar.h>
+	<wchar.h>
+	<locale.h>
+	<time.h>
+	<math.h>
+	"cpuid.h"
+	"../MyCheatLibrary/CheatLibrary/CheatLibrary.h"
+
+1500354241 source:d:\tr hacker\tr_hacker_dll\hack.c
+	"Func.h"
+
+1500022269 d:\tr hacker\tr_hacker_dll\cpuid.h
+
+1498370813 d:\tr hacker\mycheatlibrary\cheatlibrary\cheatlibrary.h
+	<stdio.h>
+	<wchar.h>
+

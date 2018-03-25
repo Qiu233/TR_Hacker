@@ -1,0 +1,23 @@
+G:\C#\Terraria_Hacker\Terraria_Hacker\bin\Debug\Terraria_Hacker.exe.config
+G:\C#\Terraria_Hacker\Terraria_Hacker\bin\Debug\Terraria_Hacker.exe
+G:\C#\Terraria_Hacker\Terraria_Hacker\bin\Debug\Terraria_Hacker.pdb
+G:\C#\Terraria_Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.csprojResolveAssemblyReference.cache
+G:\C#\Terraria_Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.exe
+G:\C#\Terraria_Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.pdb
+F:\TR_Hakcer_Console\Terraria_Hacker\obj\Debug\Terraria_Hacker.csprojResolveAssemblyReference.cache
+F:\TR_Hakcer_Console\Terraria_Hacker\obj\Debug\Terraria_Hacker.exe
+F:\TR_Hakcer_Console\Terraria_Hacker\bin\Debug\Terraria_Hacker.exe.config
+F:\TR_Hakcer_Console\Terraria_Hacker\bin\Debug\Terraria_Hacker.exe
+F:\TR_Hakcer_Console\Terraria_Hacker\bin\Debug\Terraria_Hacker.pdb
+F:\TR_Hakcer_Console\Terraria_Hacker\obj\Debug\Terraria_Hacker.pdb
+F:\TR_Hakcer_Console\Debug\Terraria_Hacker.exe.config
+F:\TR_Hakcer_Console\Debug\Terraria_Hacker.exe
+F:\TR_Hakcer_Console\Debug\Terraria_Hacker.pdb
+D:\TR Hacker\Debug\Terraria_Hacker.exe.config
+D:\TR Hacker\Debug\Terraria_Hacker.exe
+D:\TR Hacker\Debug\Terraria_Hacker.pdb
+D:\TR Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.exe
+D:\TR Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.pdb
+D:\TR Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.Res.resources
+D:\TR Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.csproj.GenerateResource.Cache
+D:\TR Hacker\Terraria_Hacker\obj\Debug\Terraria_Hacker.csprojResolveAssemblyReference.cache

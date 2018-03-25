@@ -1,0 +1,5 @@
+D:\TR Hacker\RegitserInfo\bin\ENG\RegisterInfo.exe.config
+D:\TR Hacker\RegitserInfo\bin\ENG\RegisterInfo.exe
+D:\TR Hacker\RegitserInfo\bin\ENG\Newtonsoft.Json.dll
+D:\TR Hacker\RegitserInfo\obj\ENG\RegisterInfo.csprojResolveAssemblyReference.cache
+D:\TR Hacker\RegitserInfo\obj\ENG\RegisterInfo.exe

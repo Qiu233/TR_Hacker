@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1491997668 source:d:\tr hacker\hacker_test\hacker_test\main.c
+	"Func.h"
+
+1491574991 d:\tr hacker\hacker_test\hacker_test\func.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<tlhelp32.h>
+	<tchar.h>
+	<wchar.h>
+	<locale.h>
+	<psapi.h>
+

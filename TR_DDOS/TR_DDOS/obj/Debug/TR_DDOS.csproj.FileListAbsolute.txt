@@ -1,0 +1,6 @@
+D:\C\TR_DDOS\TR_DDOS\bin\Debug\TR_DDOS.exe.config
+D:\C\TR_DDOS\TR_DDOS\bin\Debug\TR_DDOS.exe
+D:\C\TR_DDOS\TR_DDOS\bin\Debug\TR_DDOS.pdb
+D:\C\TR_DDOS\TR_DDOS\obj\Debug\TR_DDOS.csprojResolveAssemblyReference.cache
+D:\C\TR_DDOS\TR_DDOS\obj\Debug\TR_DDOS.exe
+D:\C\TR_DDOS\TR_DDOS\obj\Debug\TR_DDOS.pdb

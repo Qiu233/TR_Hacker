@@ -1,0 +1,71 @@
+Bin-fils wiil be built in Debug/Release directory
+
+
+TR_Hacker_DLL:
+Language:	C
+IDE:		Code::Blocks
+
+修改的逻辑实现
+
+
+Terraria_Hacker:
+Language:	C#
+IDE:		SharpDevelop/VS
+
+界面逻辑
+
+
+TR_DATA:
+Language:	C#
+IDE:		SharpDevelop/VS
+
+没有用的东西
+
+
+RegisterInfo:
+Language:	C#
+IDE:		SharpDevelop/VS
+
+
+
+
+Register:
+Language:	C
+IDE:		Code::Blocks
+
+
+
+Hacker_Test:
+Language:	C
+IDE:		Code::Blocks
+弃用
+
+
+Image_Packer:
+Language:	C#
+IDE:		SharpDevelop/VS
+
+打包图片文件
+
+
+MyCheatLibrary:
+Language:	C++
+IDE:		VS
+
+改造过的CheatLibrary
+
+
+TR_DDOS:
+Language:	C#
+IDE:		SharpDevelop/VS
+
+用于攻击TR服务器，大部分代码来自TR
+
+
+
+
+
+
+
+
+

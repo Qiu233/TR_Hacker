@@ -1,0 +1,11 @@
+F:\TR_Hakcer_Console\Debug\RegisterInfo.exe
+F:\TR_Hakcer_Console\Debug\RegisterInfo.pdb
+F:\TR_Hakcer_Console\CPUID\obj\Debug\RegisterInfo.csprojResolveAssemblyReference.cache
+F:\TR_Hakcer_Console\CPUID\obj\Debug\RegisterInfo.exe
+F:\TR_Hakcer_Console\CPUID\obj\Debug\RegisterInfo.pdb
+D:\TR Hacker\Debug\RegisterInfo.exe
+D:\TR Hacker\Debug\RegisterInfo.pdb
+D:\TR Hacker\RegitserInfo\obj\Debug\RegisterInfo.csprojResolveAssemblyReference.cache
+D:\TR Hacker\RegitserInfo\obj\Debug\RegisterInfo.exe
+D:\TR Hacker\RegitserInfo\obj\Debug\RegisterInfo.pdb
+D:\TR Hacker\Debug\RegisterInfo.exe.config

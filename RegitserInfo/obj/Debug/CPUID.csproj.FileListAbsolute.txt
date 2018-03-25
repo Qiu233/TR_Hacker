@@ -1,0 +1,7 @@
+F:\TR_Hakcer_Console\CPUID\obj\Debug\CPUID.csprojResolveAssemblyReference.cache
+F:\TR_Hakcer_Console\CPUID\bin\Debug\CPUID.exe
+F:\TR_Hakcer_Console\CPUID\bin\Debug\CPUID.pdb
+F:\TR_Hakcer_Console\CPUID\obj\Debug\CPUID.exe
+F:\TR_Hakcer_Console\CPUID\obj\Debug\CPUID.pdb
+F:\TR_Hakcer_Console\Debug\CPUID.exe
+F:\TR_Hakcer_Console\Debug\CPUID.pdb

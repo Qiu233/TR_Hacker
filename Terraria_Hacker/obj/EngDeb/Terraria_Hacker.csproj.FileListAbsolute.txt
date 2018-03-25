@@ -1,0 +1,11 @@
+D:\TR Hacker\Debug\Terraria_Hacker.exe.config
+D:\TR Hacker\Debug\Terraria_Hacker.exe
+D:\TR Hacker\Debug\Terraria_Hacker.pdb
+D:\TR Hacker\Terraria_Hacker\obj\EngDeb\Terraria_Hacker.csprojResolveAssemblyReference.cache
+D:\TR Hacker\Terraria_Hacker\obj\EngDeb\Terraria_Hacker.Res.resources
+D:\TR Hacker\Terraria_Hacker\obj\EngDeb\Terraria_Hacker.csproj.GenerateResource.Cache
+D:\TR Hacker\Terraria_Hacker\obj\EngDeb\Terraria_Hacker.exe
+D:\TR Hacker\Terraria_Hacker\obj\EngDeb\Terraria_Hacker.pdb
+D:\TR Hacker\EngDeb\Terraria_Hacker.exe.config
+D:\TR Hacker\EngDeb\Terraria_Hacker.exe
+D:\TR Hacker\EngDeb\Terraria_Hacker.pdb

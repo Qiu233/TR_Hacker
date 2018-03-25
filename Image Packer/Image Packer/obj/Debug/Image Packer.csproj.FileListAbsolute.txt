@@ -1,0 +1,5 @@
+D:\TR Hacker\Item_Images\Image Packer.exe
+D:\TR Hacker\Item_Images\Image Packer.pdb
+D:\TR Hacker\Image Packer\Image Packer\obj\Debug\Image Packer.csprojResolveAssemblyReference.cache
+D:\TR Hacker\Image Packer\Image Packer\obj\Debug\Image Packer.exe
+D:\TR Hacker\Image Packer\Image Packer\obj\Debug\Image Packer.pdb
