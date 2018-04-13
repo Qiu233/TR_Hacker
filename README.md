@@ -32,13 +32,13 @@ Terraria：1.3.5.3
 
 ## 部分截图:
 主界面第二页选项卡中的功能:  
-![](Pictures/Page2.png)
+![](Pictures/Page2.png)  
 背包编辑器:  
-![](Pictures/InvEditor.png)
+![](Pictures/InvEditor.png)  
 高级功能(传送到玩家之类的):  
-![](Pictures/Advanced.png)
+![](Pictures/Advanced.png)  
 查看背包(可对其他玩家):  
-![](Pictures/InvChecker.png)
+![](Pictures/InvChecker.png)  
 
 
 ## 工程结构:
