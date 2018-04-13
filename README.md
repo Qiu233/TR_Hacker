@@ -1,7 +1,4 @@
-# TR_Hacker
-![](Pictures/Icon.png)
-------
-
+# ![](Pictures/Icon.png)TR_Hacker
 ## 简述
 TR_Hacker，正式名称为Terraria Hacker，用于对游戏Terraria进行内存修改。
 功能上可以说非常Strong了。
