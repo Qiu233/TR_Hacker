@@ -31,8 +31,14 @@ Terraria：1.3.5.3
 * 插件的说明书可在Release压缩包中找到，同时还有一份插件的样例，样例提供了几个简单的功能。
 
 ## 部分截图:
-主界面第二页选项卡中的功能
-![第二页](Pictures/Page2.png)
+主界面第二页选项卡中的功能:  
+![](Pictures/Page2.png)
+背包编辑器:  
+![](Pictures/InvEditor.png)
+高级功能(传送到玩家之类的):  
+![](Pictures/Advanced.png)
+查看背包(可对其他玩家):  
+![](Pictures/InvChecker.png)
 
 
 ## 工程结构:
