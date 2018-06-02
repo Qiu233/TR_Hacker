@@ -41,7 +41,7 @@ namespace Terraria_Hacker
             pe.Graphics.DrawString(HackFunctions.getItemStack(Number).ToString(), new Font("Arial", 10), new SolidBrush(Color.Black), 10, 35);
             if (Selected)
             {
-                pe.Graphics.DrawRectangle(new Pen(Color.Blue, 3), 1, 1, pe.ClipRectangle.Width - 4, pe.ClipRectangle.Height - 4);
+                pe.Graphics.DrawRectangle(new Pen(Color.Blue, 3), 1, 1, pe.ClipRectangle.Width - 3, pe.ClipRectangle.Height - 3);
             }
         }
     }
@@ -70,6 +70,7 @@ namespace Terraria_Hacker
 #pragma warning disable CS1690
         public InvEditor()
         {
+			BackColor = Color.LightGray;
             hacks = new Hashtable();
             HackPanel = new Panel();
             ItemSlots = new ItemIcon[HackFunctions.INV_MAX_COUNT];

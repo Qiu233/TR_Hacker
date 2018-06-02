@@ -27,6 +27,7 @@ namespace Terraria_Hacker
 		public SpecialForm()
 		{
 			Window = this;
+			BackColor = Color.LightGray;
 			HackFunctions.WarpLoad();
 			InitializeComponent();
 			InitControls();
@@ -51,8 +52,8 @@ namespace Terraria_Hacker
 					Size = new Size(200, 180),
 					View = View.Details,
 					MultiSelect = false,
-					FullRowSelect = true
-				};
+					FullRowSelect = true,
+			};
 				warpList.BeginUpdate();
 				warpList.Columns.Add(Lang.telePoint, warpList.Size.Width / 3);
 				warpList.Columns.Add(Lang.descr, warpList.Size.Width / 3 * 2);
@@ -335,7 +336,7 @@ namespace Terraria_Hacker
 					playerList.Columns.Add(Lang.currentLife, playerList.Size.Width / 4);
 					playerList.Columns.Add(Lang.maxLife, playerList.Size.Width / 4);
 					System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
-					updateTimer.Interval = 50;
+					updateTimer.Interval = 100;
 					updateTimer.Tick += (sender, e) =>
 					{
 						UpdatePlayerList();
@@ -358,7 +359,6 @@ namespace Terraria_Hacker
 		}
 		private void UpdatePlayerList()
 		{
-			GC.Collect();
 			int i = 0;
 			for (; i < 50; i++)
 			{
@@ -415,7 +415,8 @@ namespace Terraria_Hacker
 				rst += *(str + i);
 				i++;
 			}
-			MainForm.FreeMemory((int)str);
+			//MainForm.FreeMemory((int)str);
+			Marshal.FreeHGlobal((IntPtr)str);
 			return rst;
 		}
 		private void DelWarp()

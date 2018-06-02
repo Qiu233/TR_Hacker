@@ -29,6 +29,7 @@ namespace Terraria_Hacker
         public ExtraForm()
         {
             Window = this;
+			BackColor = Color.LightGray;
             hacks = new Hashtable();
             InitializeComponent();
             InitControls();

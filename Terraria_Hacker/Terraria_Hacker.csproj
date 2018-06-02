@@ -125,6 +125,9 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PlayerDetail_Buff.cs">
       <SubType>Form</SubType>
     </Compile>

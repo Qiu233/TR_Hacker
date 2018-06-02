@@ -89,6 +89,7 @@ namespace Terraria_Hacker
 		public TabPage RegisterTab(string Text)
 		{
 			TabPage tp = new TabPage(Text);
+			tp.BackColor = Color.LightGray;
 			tabs[Text] = tp;
 			indexes[Text] = 0;
 			mainTab.Controls.Add(tp);
@@ -168,10 +169,10 @@ namespace Terraria_Hacker
 			
 
 
-			mainTab = new TabControl()
+			mainTab = new MTabControl()
 			{
 				Location = new Point(0, 75),
-				Size = new Size(300, 500 - 75),
+				Size = new Size(300, 500 - 105),
 				SelectedIndex = 0
 			};
 			buttonTabPage1 = RegisterTab("1");
@@ -248,7 +249,8 @@ namespace Terraria_Hacker
 						  UUIDString.Append((char)UUID[i]);
 					  }
 					  u.Text = Lang.randomUUID + ":" + UUIDString.ToString();
-					  FreeMemory((int)UUID);
+					  //FreeMemory((int)UUID);
+					  Marshal.FreeHGlobal((IntPtr)UUID);
 					  return 1;
 				  }, null, false);
 				u.Font = new Font("SimSun", 8);
@@ -426,7 +428,7 @@ namespace Terraria_Hacker
                 }
             }*/
 
-
+			BackColor = Color.LightGray;
 			cross = (Image)resource.res.GetObject("cross");
 			mainWindow = this;
 			InitializeComponent();

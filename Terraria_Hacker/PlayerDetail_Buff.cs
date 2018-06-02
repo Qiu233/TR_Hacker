@@ -23,7 +23,7 @@ namespace Terraria_Hacker
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-
+			
 			this.Text = name;
 			this.id = id;
 			InitializeComponent();
