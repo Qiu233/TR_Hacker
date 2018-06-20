@@ -8,124 +8,125 @@ Help in English:
 <blockquote>
   2018/6/17
 
-Software name: Terraria Hacker(Qiu's Hack)
-Repository: https://github.com/ZhaoJianQiu/TR_Hacker/
-Author: Qiu
+Software name: Terraria Hacker(Qiu's Hack)  
+Repository: https://github.com/ZhaoJianQiu/TR_Hacker/  
+Author: Qiu  
 
 
-Best enviroment to use:
-	CPU: Intel Core i3/5/7
-	OS: Windows 7/8/10 64 bit
-	.Net: 4.5.2 Or 4.6.2
-	Terraria: 1.3.5.3
+Best enviroment to use:  
+	CPU: Intel Core i3/5/7  
+	OS: Windows 7/8/10 64 bit  
+	.Net: 4.5.2 Or 4.6.2  
+	Terraria: 1.3.5.3  
 
-Notice: 
-1.Not all functions are available on your computer.
-2.32 bit is absolutely unsupported.
+Notice:   
+1.Not all functions are available on your computer.  
+2.32 bit is absolutely unsupported.  
 
-Features:
-	Visual Inventory Editor
-	Inventory Saving and Loading
-	Plugin Supported
-	Point-Specified and Player-Specified Teleporting
-	Others' Inventory Spying
-	NPCs(both friendly and unfriendly) Burning
+Features:  
+	Visual Inventory Editor  
+	Inventory Saving and Loading  
+	Plugin Supported  
+	Point-Specified and Player-Specified Teleporting  
+	Others' Inventory Spying  
+	NPCs(both friendly and unfriendly) Burning  
 	
-All Functions:
-	Common: Most of these functions is closable
-		1:
-			Infinite Life/Oxygen/Summon/Mana/Ammo and Items/Fly.
-			Immune Debuffs: May cause some problem,close it when no needing.
-			HighLight: Brighten all blocks inside your screen.
-			Ghost Mode: To be a ghost, you can float in the world ignoring blocks and gravity.
-			Respawn without Waiting: Available when playing in a normal world(not expert).
-			Attack Ignoring Blocks: Melee damage ignoring block.
-			No Potion Delay: Life potion NO delay.
+All Functions:  
+	Common: Most of these functions is closable  
+		1:  
+			Infinite Life/Oxygen/Summon/Mana/Ammo and Items/Fly.  
+			Immune Debuffs: May cause some problem,close it when no needing.  
+			HighLight: Brighten all blocks inside your screen.  
+			Ghost Mode: To be a ghost, you can float in the world ignoring blocks and gravity.  
+			Respawn without Waiting: Available when playing in a normal world(not expert).  
+			Attack Ignoring Blocks: Melee damage ignoring block.  
+			No Potion Delay: Life potion NO delay.  
 			
-		2:
-			Decrease Gravity: Just like a feather.
-			Increase Movement Speed: Very fast.
-			Kill All NPC: A fake function.Pretending killing all NPCs but in fact they're alive.
-			Projectiles Through Walls: Projectiles can fly through blocks.
-			Pick Far Away: To pick items far from you!Not to pick a tile!
-			Another Two Slots: Bonus 2 slots.
-			Gold Hole Drop Treasure Bag: Enable this.Change an item's proj ID into 518, and then you'll find that...
-			Slime Gun burns NPC: Can be used in server.
-			Fish only crates: As the name.Useless.
-			Weapon Waving Kills All On Screen: Don't try this.It's now disabled.
-			Enable all recipes: As the name.
-			Strengthen the Vampire Knives: Now you can throw knives 360°
+		2:  
+			Decrease Gravity: Just like a feather.  
+			Increase Movement Speed: Very fast.  
+			Kill All NPC: A fake function.Pretending killing all NPCs but in fact they're alive.  
+			Projectiles Through Walls: Projectiles can fly through blocks.  
+			Pick Far Away: To pick items far from you!Not to pick a tile!  
+			Another Two Slots: Bonus 2 slots.  
+			Gold Hole Drop Treasure Bag: Enable this.Change an item's proj ID into 518, and then you'll find that...  
+			Slime Gun burns NPC: Can be used in server.  
+			Fish only crates: As the name.Useless.  
+			Weapon Waving Kills All On Screen: Don't try this.It's now disabled.  
+			Enable all recipes: As the name.  
+			Strengthen the Vampire Knives: Now you can throw knives 360°  
 			
-		3:
-			Waving attack blocks: As the name, you can "attack" blocks.
-			Burn all NPCs: Burn all NPCs, friendly or unfriendly, in server or single-playing.
-			Burn All Player: As the name, but disabled in TShock server.
-			Drop Lava On Player: Disabled. Don't click.
-			Random UUID: It's useless for you if you do not know what UUID means.
+		3:  
+			Waving attack blocks: As the name, you can "attack" blocks.  
+			Burn all NPCs: Burn all NPCs, friendly or unfriendly, in server or single-playing.  
+			Burn All Player: As the name, but disabled in TShock server.  
+			Drop Lava On Player: Disabled. Don't click.  
+			Random UUID: It's useless for you if you do not know what UUID means.  
 			
-		Event: All of these functions can only be used when single playing.
-			Toggle Day/Night.
-			Toggle Sundial/BloodMoon/Eclipse/Snow Moon/Pumpkin Moon.
+		Event:  
+			All of these functions can only be used when single playing.  
+			Toggle Day/Night.  
+			Toggle Sundial/BloodMoon/Eclipse/Snow Moon/Pumpkin Moon.  
 		
-		Builder:
-			Super range: Your hands are so long that you can touch everything you see.
-			Very fast tiling speed: As the name.
-			Ruler effect: Ruler.
-			Machinical Ruler effect: Machinical Ruler.
-			Machinical Glass effect: Machinical Glass.
+		Builder:  
+			Super range: Your hands are so long that you can touch everything you see.  
+			Very fast tiling speed: As the name.  
+			Ruler effect: Ruler.  
+			Machinical Ruler effect: Machinical Ruler.  
+			Machinical Glass effect: Machinical Glass.  
 			
-		Effect:
-			Inferno potion effect: No damage.In your view everyone has a ring.But in others there's no rings.
-			Shadow dodge: Immune any damage.
+		Effect:  
+			Inferno potion effect: No damage.In your view everyone has a ring.But in others there's no rings.  
+			Shadow dodge: Immune any damage.  
 			
-	Extra:
-		Add Buff/Pet and Set Mount.
-		Add Item by name.
-		Summon NPC, single-playing only.
-		Inventory Editor: The most important function.
-			It's a new window that contains 3 area(left to right):
-				1.Items Grid: 
-					Visual Player's Inventory, 5*10 slots with item icon and number.
-					Click to choose.
-				2.Alternative Items Grid:
-					Alternative Items, right click to edit,double click to get this item.
-				3.Modifying Panel:
-					To modify an item:
-						1.choose the item to do this on the Items Grid.
-						2.fill in the textbox on the Modifying Panel.
-						3.click the confirm button.
-					To initialize an item:
-						1.choose the item to do this on the Items Grid.
-						2.click the initialize button.
-					To get a new item:
-						1.choose the item to do this on the Items Grid.
-						2.fill in the ItemID, Number(Count), Prefix textbox.
-						3.click the initialize button.
-			You can save your inventory in order to load it whenever you like.
-			Just press the button Save.
-			You'll get a .inv file contains your inventory information(including armor,misc and so on).
-			Then you can share it with your friends.
-			To load a .inv file, press button Load, then choose the .inv file you'd like to load from.
+	Extra:  
+		Add Buff/Pet and Set Mount.  
+		Add Item by name.  
+		Summon NPC, single-playing only.  
+		Inventory Editor: The most important function.  
+			It's a new window that contains 3 area(left to right):  
+				1.Items Grid:   
+					Visual Player's Inventory, 5*10 slots with item icon and number.  
+					Click to choose.  
+				2.Alternative Items Grid:  
+					Alternative Items, right click to edit,double click to get this item.  
+				3.Modifying Panel:  
+					To modify an item:  
+						1.choose the item to do this on the Items Grid.  
+						2.fill in the textbox on the Modifying Panel.  
+						3.click the confirm button.  
+					To initialize an item:  
+						1.choose the item to do this on the Items Grid.  
+						2.click the initialize button.  
+					To get a new item:  
+						1.choose the item to do this on the Items Grid.  
+						2.fill in the ItemID, Number(Count), Prefix textbox.  
+						3.click the initialize button.  
+			You can save your inventory in order to load it whenever you like.  
+			Just press the button Save.  
+			You'll get a .inv file contains your inventory information(including armor,misc and so on).  
+			Then you can share it with your friends.  
+			To load a .inv file, press button Load, then choose the .inv file you'd like to load from.  
 			
-	More:
-		Teleporting view is at the top side.
-		At the bottom there is a grid that shows all players online.
-		The grid contains players' name,coordinates,current life and max life.
-		By right clicking one player, you can:
-			1.teleport to.
-			2.convert to: Convert your view to the player's.
-			3.Spy the player's inventory.
-			4.View buffs.
-		Note that if you're far from the player,you cannot get the correct buffs and inventory.
+	More:  
+		Teleporting view is at the top side.  
+		At the bottom there is a grid that shows all players online.  
+		The grid contains players' name,coordinates,current life and max life.  
+		By right clicking one player, you can:  
+			1.teleport to.  
+			2.convert to: Convert your view to the player's.  
+			3.Spy the player's inventory.  
+			4.View buffs.  
+		Note that if you're far from the player,you cannot get the correct buffs and inventory.  
 	
-	Plugin:
-		1.Create a C# library project.
-		2.Add Terraria_Hakcer.exe into references.
-		3.Add a class that extends Terraria_Hakcer.Plugin and then add the PluginInfo Attribute.
-		4.Build the project.
-		5.Copy the .dll file into hack/plugins/
-		6.Restart the hack.
-		There is an example of plugin at hack/plugins/Utils.cs.
+	Plugin:  
+		1.Create a C# library project.  
+		2.Add Terraria_Hakcer.exe into references.  
+		3.Add a class that extends Terraria_Hakcer.Plugin and then add the PluginInfo Attribute.  
+		4.Build the project.  
+		5.Copy the .dll file into hack/plugins/  
+		6.Restart the hack.  
+		There is an example of plugin at hack/plugins/Utils.cs.  
 </blockquote>
 
 
