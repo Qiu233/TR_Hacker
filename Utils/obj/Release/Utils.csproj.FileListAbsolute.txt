@@ -3,3 +3,9 @@ D:\TR Hacker\Release\plugins\Utils.pdb
 D:\TR Hacker\Utils\obj\Release\Utils.csprojResolveAssemblyReference.cache
 D:\TR Hacker\Utils\obj\Release\Utils.dll
 D:\TR Hacker\Utils\obj\Release\Utils.pdb
+D:\TR_Hacker\Release\plugins\Utils.dll
+D:\TR_Hacker\Release\plugins\Utils.pdb
+D:\TR_Hacker\Utils\obj\Release\Utils.csprojResolveAssemblyReference.cache
+D:\TR_Hacker\Utils\obj\Release\Utils.csproj.CoreCompileInputs.cache
+D:\TR_Hacker\Utils\obj\Release\Utils.dll
+D:\TR_Hacker\Utils\obj\Release\Utils.pdb

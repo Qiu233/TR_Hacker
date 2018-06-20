@@ -14,10 +14,17 @@ namespace Utils
 		public override void Loaded()
 		{
 			RegisterTab("Utils");
+#if ENG
+			RegisterButton("99 hat(buckit)", "Utils", Buckit, null, false);
+			RegisterButton("Invisible and Ignore any damage", "Utils", Invisible, null, false);
+			RegisterButton("CreateTile Larva(hit to summon queen bee)", "Utils", PlaceLarva, null, false);
+			RegisterButton("Set maxstack to 999", "Utils", MaxStack999, null, false);
+#else
 			RegisterButton("99层帽子", "Utils", Buckit, null, false);
 			RegisterButton("隐身并无敌", "Utils", Invisible, null, false);
 			RegisterButton("放置物蜂巢", "Utils", PlaceLarva, null, false);
 			RegisterButton("可以叠加999", "Utils", MaxStack999, null, false);
+#endif
 		}
 
 		private int MaxStack999()

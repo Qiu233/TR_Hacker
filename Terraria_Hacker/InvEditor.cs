@@ -17,9 +17,11 @@ namespace Terraria_Hacker
         public int Number;
         public bool Selected = false;
         private int lastID;
+		private ToolTip Tip;
         public ItemIcon(int num)
         {
             Number = num;
+			Tip = new ToolTip();
         }
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -34,14 +36,19 @@ namespace Terraria_Hacker
                     g.DrawImage(newImg, 0, 0);
                     this.Image = newImg;
                     g.Dispose();
-                }
+					Tip.SetToolTip(this, MainForm.resource.Items.First(i => i.id == nowID).name);
+				}
+				else
+				{
+					Tip.SetToolTip(this, "");
+				}
                 this.lastID = nowID;
             }
             base.OnPaint(pe);
             pe.Graphics.DrawString(HackFunctions.getItemStack(Number).ToString(), new Font("Arial", 10), new SolidBrush(Color.Black), 10, 35);
             if (Selected)
             {
-                pe.Graphics.DrawRectangle(new Pen(Color.Blue, 3), 1, 1, pe.ClipRectangle.Width - 3, pe.ClipRectangle.Height - 3);
+                pe.Graphics.DrawRectangle(new Pen(Color.BlueViolet, 3), 1, 1, pe.ClipRectangle.Width - 3, pe.ClipRectangle.Height - 3);
             }
         }
     }
@@ -101,7 +108,6 @@ namespace Terraria_Hacker
                         break;
                 }
             };
-
             for (int i = 0; i < ItemSlots.Length; i++)
             {
                 int row = (int)Math.Floor((double)(i / 10));

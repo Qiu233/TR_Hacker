@@ -17,16 +17,16 @@ namespace Terraria_Hacker
 	{
 
 #if ENG
-		public static string infLife = "Infinite Life", infOxygen = "InfiniteOxygen", infSummon = "Infinite summon", infMana = "Infinite Mana", infItemAndAmmo = "Infinite Item and Ammo", superRange = "Super range";
+		public static string infLife = "Infinite Life", infOxygen = "Infinite Oxygen", infSummon = "Infinite summon", infMana = "Infinite Mana", infItemAndAmmo = "Infinite Item and Ammo", superRange = "Super range";
 		public static string infFly = "Infinite Fly", immuneStoned = "Immunise Debuffs", highLight = "High Light", ghostMode = "Ghost Mode", respawnAtOnce = "Respawn without Waiting", goldHoleDropBag = "Gold Hole Drop Treasure Bag", slimeGunBurn = "Slime Gun burns NPC";
-		public static string attackThroughWalls = "Attack Through Walls", decreaseGravity = "Decrease Gravity", increaseSpeed = "Increase Movement Speed", killAllNPC = "Kill All NPC", projectileThroughWalls = "Projectiles Through Walls", superPick = "Pick Far Away", extraTwoSlots = "Another Two Slots";
+		public static string attackThroughWalls = "Attack Ignoring Blocks", decreaseGravity = "Decrease Gravity", increaseSpeed = "Increase Movement Speed", killAllNPC = "Kill All NPC", projectileThroughWalls = "Projectiles Through Walls", superPick = "Pick Far Away", extraTwoSlots = "Another Two Slots";
 		public static string toggleDay = "Toggle Day/Night", toggleSunDial = "Toggle Sundial", toggleBloodMoon = "Toggle Blood Moon", toggleEclipse = "Toggle Eclipse";
-		public static string none = "none", Event = "Event", nonePlayerBase = "No player base address", extra = "Extra", dragTip = "Drag the cross to Terraria window", off = "off";
+		public static string none = "None", Event = "Event", nonePlayerBase = "No player base address found", extra = "Extra", dragTip = "Drag the cross to Terraria window", off = "OFF";
 		public static string sucToHack = "Success to Hack", faiToHack = "Failed to Hack", sucToCancel = "Success to Cancel", faiToCancel = "Failed to Cancel", faiToGetBase = "Failed to get base address", baseaddr = "BaseAddr";
 		public static string maxLife = "Max Life", maxMana = "Max Mana", confirm = "Confirm";
 		public static string slot = "Slot", itemID = "ItemID", damage = "Damage", number = "Number", knockBack = "Knockback", crit = "Crit", buff = "Buff", buffTime = "BuffTime";
-		public static string manaInc = "ManaIncrease", lifeIncrease = "LifeIncrease", useCD = "CoolDown", waveCD = "Waving CD", effCD = "Effect CD", scale = "Scale", defense = "Defense", projSpeed = "Projctile speed";
-		public static string projID = "Projectile ID", dig = "Dig", hag = "Hag", hammer = "Hammer", digRange = "Dig range", tileID = "Tile ID", prefix = "Prefix", autoReuse = "Auto Reuse", equippable = "Equippable";
+		public static string manaInc = "ManaIncrease", lifeIncrease = "LifeIncrease", useCD = "Using CD", waveCD = "Waving CD", effCD = "Effect CD", scale = "Scale", defense = "Defense", projSpeed = "Proj speed";
+		public static string projID = "Proj type", dig = "Dig", hag = "Hag", hammer = "Hammer", digRange = "Dig range", tileID = "Tile ID", prefix = "Prefix", autoReuse = "Auto Reuse", equippable = "Equippable";
 		public static string refresh = "Refresh", confirmHack = "Confirm", addBuff = "Add Buff", addPet = "Add Pet", setMount = "Set Mount", more = "More";
 		public static string addBuffWnd = "Add Buff", wndBuffID = "Buff ID", wndBuffTime = "Buff Time", addPetWnd = "Add Pet", setMountWnd = "Set Mount";
 		public static string telePoint = "TP Point", descr = "Description", teleport = "TP", teleMessage = "Are you sure to teleport to", addText = "Add", nameText = "Name", exists = "is exists", delete = "Delete", deleteMessage = "Are you sure to delete";
@@ -34,13 +34,13 @@ namespace Terraria_Hacker
 		public static string seniorMessage = "Only teleport point is available because of single play";
 		public static string regTip = "Please enter the code to register", regWrong = "Unavailable code", sucToReg = "Successful";
 		public static string builder = "Builder", fastTileSpeed = "Very fast tiling speed", rulerEffect = "Ruler effect", machinicalRulerEffect = "Machinical Ruler effect";
-		public static string hackInv = "Inventory Modifier";
+		public static string hackInv = "Inventory Editor";
 		public static string eff = "Effect", infernoEffect = "Inferno potion effect(no damage)", shadowDodge = "Shadow dodge", script = "Script", showCircuit = "Machinical Glass effect";
 		public static string fishOnlyCrates = "Fish only crates";
-		public static string Wiki = "Wiki", fishingPower = "fishSkill", baitPower = "BaitPower", noPotionDelay = "No Potion Delay", killAllScreen = "Weapon Waving Kills All On Screen";
-		public static string placeStyle = "Data", allRecipe = "All Item to Recipe", snowMoon = "Toggle Snow Moon", pumpkinMoon = "Toggle Pumpkin Moon", strengthen_Vampire_Knives = "Strengthen the Vampire Knives", burnAllNPC = "Burn All NPC", randomUUID = "Random UUID";
-		public static string burnAllPlayer = "Burn All Player(without TShock)", dropLava = "Drop Lava On Player(Disabled)", addItem = "Add Item", newNpc = "Summon NPC", save = "Save", load = "Load", init = "Initialize";
-		public static string convertTo = "Convert to",blockAttacking="Attackable blocks";
+		public static string Wiki = "Wiki", fishingPower = "Fish Skill", baitPower = "BaitPower", noPotionDelay = "No Potion Delay", killAllScreen = "Weapon Waving Kills All On Screen";
+		public static string placeStyle = "Data", allRecipe = "Enable all recipes", snowMoon = "Toggle Snow Moon", pumpkinMoon = "Toggle Pumpkin Moon", strengthen_Vampire_Knives = "Strengthen the Vampire Knives", burnAllNPC = "Burn all NPCs", randomUUID = "Random UUID";
+		public static string burnAllPlayer = "Burn All Player(without TShock)", dropLava = "Drop Lava On Player(Wasted)", addItem = "Add Item", newNpc = "Summon NPC", save = "Save", load = "Load", init = "Initialize";
+		public static string convertTo = "Convert to", blockAttacking = "Waving attack blocks";
 
 #else
 		public static string infLife="无限生命",infOxygen="无限氧气",infSummon="无限召唤",infMana="无限魔法",infItemAndAmmo="无限物品/弹药",superRange="超远距离";

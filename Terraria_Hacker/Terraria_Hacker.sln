@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terraria_Hacker", "Terraria_Hacker.csproj", "{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}"
 EndProject
@@ -12,30 +12,30 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		ENG|Any CPU = ENG|Any CPU
+		EngRel|Any CPU = EngRel|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.ENG|Any CPU.ActiveCfg = ENG|Any CPU
-		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.ENG|Any CPU.Build.0 = ENG|Any CPU
+		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.EngRel|Any CPU.ActiveCfg = EngRel|Any CPU
+		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.EngRel|Any CPU.Build.0 = EngRel|Any CPU
 		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEF84ED4-673C-4AAC-8403-7B070F4B2D37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.ENG|Any CPU.ActiveCfg = ENG|Any CPU
-		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.ENG|Any CPU.Build.0 = ENG|Any CPU
+		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.EngRel|Any CPU.ActiveCfg = EngRel|Any CPU
 		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{122DF07A-D09B-41B1-96A5-957EFC7FCD3E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{378E553A-2D05-479A-ADDE-94AC39713671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{378E553A-2D05-479A-ADDE-94AC39713671}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{378E553A-2D05-479A-ADDE-94AC39713671}.ENG|Any CPU.ActiveCfg = Release|Any CPU
-		{378E553A-2D05-479A-ADDE-94AC39713671}.ENG|Any CPU.Build.0 = Release|Any CPU
+		{378E553A-2D05-479A-ADDE-94AC39713671}.EngRel|Any CPU.ActiveCfg = EngRel|Any CPU
+		{378E553A-2D05-479A-ADDE-94AC39713671}.EngRel|Any CPU.Build.0 = EngRel|Any CPU
 		{378E553A-2D05-479A-ADDE-94AC39713671}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{378E553A-2D05-479A-ADDE-94AC39713671}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F162BD9-0B86-4FD9-817E-4F1A31EC3024}
 	EndGlobalSection
 EndGlobal

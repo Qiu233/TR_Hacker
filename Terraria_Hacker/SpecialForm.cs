@@ -415,8 +415,8 @@ namespace Terraria_Hacker
 				rst += *(str + i);
 				i++;
 			}
-			//MainForm.FreeMemory((int)str);
-			Marshal.FreeHGlobal((IntPtr)str);
+			MainForm.FreeMemory((int)str);
+			//Marshal.FreeHGlobal((IntPtr)str);
 			return rst;
 		}
 		private void DelWarp()

@@ -166,7 +166,7 @@ namespace Terraria_Hacker
 				 }
 			 };
 			this.Controls.Add(Extra);
-			
+
 
 
 			mainTab = new MTabControl()
@@ -249,8 +249,8 @@ namespace Terraria_Hacker
 						  UUIDString.Append((char)UUID[i]);
 					  }
 					  u.Text = Lang.randomUUID + ":" + UUIDString.ToString();
-					  //FreeMemory((int)UUID);
-					  Marshal.FreeHGlobal((IntPtr)UUID);
+					  FreeMemory((int)UUID);
+					  //Marshal.FreeHGlobal((IntPtr)UUID);
 					  return 1;
 				  }, null, false);
 				u.Font = new Font("SimSun", 8);

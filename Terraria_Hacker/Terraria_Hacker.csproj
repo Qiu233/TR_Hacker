@@ -70,15 +70,12 @@
     <DefineConstants>TRACE;ENG</DefineConstants>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ENG|AnyCPU'">
-    <OutputPath>..\Eng\</OutputPath>
-    <DefineConstants>TRACE;ENG</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'EngRel|AnyCPU'">
+    <OutputPath>..\EngRel\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
-    <FileAlignment>4096</FileAlignment>
-    <DebugType>None</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DefineConstants>TRACE;ENG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
