@@ -1,7 +1,0 @@
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\bin\Debug\TR_DATA.exe
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\bin\Debug\TR_DATA.pdb
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Debug\TR_DATA.csprojResolveAssemblyReference.cache
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Debug\TR_DATA.exe
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Debug\TR_DATA.pdb
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Debug\TR_DATA.Resource1.resources
-D:\TR Hacker\TR_DATA\TR_DATA\TR_DATA\obj\Debug\TR_DATA.csproj.GenerateResource.Cache

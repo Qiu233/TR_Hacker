@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1492308531 source:d:\tr hacker\hacker_test\getbase\main.c
-	<Windows.h>
-	<Tlhelp32.h>
-	<stdio.h>
-	<string.h>
-	<tchar.h>
-
