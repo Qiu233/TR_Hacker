@@ -1,7 +1,0 @@
-F:\TR_Hakcer_Console\Release\RegisterInfo.exe
-F:\TR_Hakcer_Console\RegitserInfo\obj\Release\RegisterInfo.csprojResolveAssemblyReference.cache
-F:\TR_Hakcer_Console\RegitserInfo\obj\Release\RegisterInfo.exe
-D:\TR Hacker\Release\RegisterInfo.exe
-D:\TR Hacker\RegitserInfo\obj\Release\RegisterInfo.csprojResolveAssemblyReference.cache
-D:\TR Hacker\RegitserInfo\obj\Release\RegisterInfo.exe
-D:\TR Hacker\Release\RegisterInfo.exe.config

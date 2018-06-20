@@ -1,3 +1,0 @@
-F:\TR_Hakcer_Console\Release\CPUID.exe
-F:\TR_Hakcer_Console\CPUID\obj\Release\CPUID.exe
-F:\TR_Hakcer_Console\CPUID\obj\Release\CPUID.csprojResolveAssemblyReference.cache
