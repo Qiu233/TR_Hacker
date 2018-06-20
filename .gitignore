@@ -4,7 +4,13 @@
 /Eng/
 /EngRel/
 /EngDeb/
+/MyCheatLibrary/.vs
 /MyCheatLibrary/CheatLibrary.VC.db
+/MyCheatLibrary/CheatLibrary/.vs/
+/MyCheatLibrary/CheatLibrary/Debug/
+/MyCheatLibrary/CheatLibrary/Release/
+/MyCheatLibrary/CL_Test/Debug/
+/MyCheatLibrary/CL_Test/Release/
 /MyCheatLibrary/Release/
 /MyCheatLibrary/Debug/
 /TR_DDOS/
@@ -15,4 +21,7 @@
 /RegitserInfo/
 /Hacker_Test/
 /Terraria_Hacker/.vs/
+/Terraria_Hacker/obj/
 /Image Packer/.vs
+/Image Packer/Image Packer/obj
+/Utils/obj/
