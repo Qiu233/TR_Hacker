@@ -19,12 +19,21 @@ namespace Utils
 			RegisterButton("Invisible and Ignore any damage", "Utils", Invisible, null, false);
 			RegisterButton("CreateTile Larva(hit to summon queen bee)", "Utils", PlaceLarva, null, false);
 			RegisterButton("Set maxstack to 999", "Utils", MaxStack999, null, false);
+			RegisterButton("Give a random item", "Utils", RandomItem, null, false);
 #else
 			RegisterButton("99层帽子", "Utils", Buckit, null, false);
 			RegisterButton("隐身并无敌", "Utils", Invisible, null, false);
 			RegisterButton("放置物蜂巢", "Utils", PlaceLarva, null, false);
 			RegisterButton("可以叠加999", "Utils", MaxStack999, null, false);
+			RegisterButton("获得随机物品", "Utils", RandomItem, null, false);
 #endif
+		}
+
+		private int RandomItem()
+		{
+			Random r = new Random();
+			HackFunctions.AddItem(r.Next() % MainForm.resource.Items.Length + 1, 1, 0);
+			return 1;
 		}
 
 		private int MaxStack999()
