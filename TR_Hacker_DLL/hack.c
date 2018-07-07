@@ -645,7 +645,7 @@ int De_EnableAllRecipes()
             ReadProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xd,&addr,4,NULL);
             addr+=(int)Terraria_Recipe_FindRecipes+0xd+4;
             char str[20];
-            sprintf(str,"%x",addr);
+            sprintf(str,"%x",(unsigned)addr);
             VirtualFreeEx(hProcess,addr,0,MEM_RELEASE);
         }
         byte b[6];
@@ -1302,25 +1302,16 @@ int aobscan(HANDLE hProcess,const char *aob,int beginaddr)
     int i=beginaddr;
     while(i<0x7fffffff)
     {
-        VirtualQueryEx(hProcess,(void*)i,&mbi,28);
-        //printf("%d",mbi.RegionSize);
-        if((int)mbi.RegionSize<=0)
-        {
+        unsigned int flag=VirtualQueryEx(hProcess,(void*)i,&mbi,sizeof(MEMORY_BASIC_INFORMATION));
+        if(flag!=sizeof(MEMORY_BASIC_INFORMATION))
             break;
-        }
+        if((int)mbi.RegionSize<=0)
+            break;
         if(mbi.Protect!=64||mbi.State!=MEM_COMMIT)
         {
-            int ti=(int)i;
             i+=mbi.RegionSize;
-            if(i<=ti)
-            {
-                break;
-            }
             continue;
         }
-        //int j;
-        //for(j=0; j<(int)mbi.RegionSize/4096; j++)
-        //
         char *mem=(char*)malloc((int)mbi.RegionSize);
         ReadProcessMemory(hProcess,(void*)i,mem,(int)mbi.RegionSize,0);
         int r=memmem(mem,(int)mbi.RegionSize,(char*)b,len);
@@ -1328,13 +1319,7 @@ int aobscan(HANDLE hProcess,const char *aob,int beginaddr)
         {
             return i+r;
         }
-        int ti=(int)i;
         i+=mbi.RegionSize;
-        if(i<=ti)
-        {
-            break;
-        }
-        //}
     }
     return -1;
 }
