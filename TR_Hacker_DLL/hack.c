@@ -1244,16 +1244,10 @@ int memmem(char * a, int alen, char * b, int blen)
     for(i=0; i<alen-blen; ++i)
     {
         for(j=0; j<blen; ++j)
-        {
             if(a[i+j]!=b[j])
-            {
                 break;
-            }
-        }
         if(j>=blen)
-        {
             return i;
-        }
     }
     return -1;
 }
@@ -1299,27 +1293,26 @@ int aobscan(HANDLE hProcess,const char *aob,int beginaddr)
     byte b[256];
     int len=getHexCode(aob,b);
     MEMORY_BASIC_INFORMATION mbi;
-    int i=beginaddr;
-    while(i<0x7fffffff)
+    while(beginaddr<0x7fffffff)
     {
-        unsigned int flag=VirtualQueryEx(hProcess,(void*)i,&mbi,sizeof(MEMORY_BASIC_INFORMATION));
+        unsigned int flag=VirtualQueryEx(hProcess,(void*)beginaddr,&mbi,sizeof(MEMORY_BASIC_INFORMATION));
         if(flag!=sizeof(MEMORY_BASIC_INFORMATION))
             break;
         if((int)mbi.RegionSize<=0)
             break;
-        if(mbi.Protect!=64||mbi.State!=MEM_COMMIT)
+        if(mbi.Protect!=PAGE_EXECUTE_READWRITE||mbi.State!=MEM_COMMIT)
         {
-            i+=mbi.RegionSize;
+            beginaddr+=mbi.RegionSize;
             continue;
         }
         char *mem=(char*)malloc((int)mbi.RegionSize);
-        ReadProcessMemory(hProcess,(void*)i,mem,(int)mbi.RegionSize,0);
+        ReadProcessMemory(hProcess,(void*)beginaddr,mem,(int)mbi.RegionSize,0);
         int r=memmem(mem,(int)mbi.RegionSize,(char*)b,len);
         if(r>=0)
         {
-            return i+r;
+            return beginaddr+r;
         }
-        i+=mbi.RegionSize;
+        beginaddr+=mbi.RegionSize;
     }
     return -1;
 }

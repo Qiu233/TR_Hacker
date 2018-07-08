@@ -135,7 +135,7 @@ PVOID Aobscan(const char *aob, UINT beginaddr)
 VOID Inline_Hook_Bytes(void*addr, BYTE*code, UINT dstLen, UINT len)
 {
 	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
-	BYTE *ASM_CODE = (BYTE*)malloc(len);
+	BYTE *ASM_CODE = (BYTE*)malloc(len + 5);
 	memcpy(ASM_CODE, code, len);
 	ASM_CODE[len] = 0xE9;//jmp
 	UINT*retjmp = (UINT *)&ASM_CODE[len + 1];
