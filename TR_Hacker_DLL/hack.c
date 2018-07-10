@@ -8,7 +8,6 @@ void* Terraria_Main_DrawInterface_Resources_Life,*Terraria_Item_SetDefaults,*Ter
 void* Terraria_Main_AnglerQuestSwap;
 
 HANDLE hProcess;
-byte reg=1;
 int itemArrOff=0xbc;
 
 void* getPlayerBaseAddress(int player);
@@ -239,7 +238,7 @@ void InitOffset()
 WCHAR* getPathShortName(WCHAR *full)
 {
     int j=0;
-    for(int i=lstrlenW(full);i>0;i--)
+    for(int i=lstrlenW(full); i>0; i--)
     {
         if(full[i]==L'\\')
         {
@@ -256,22 +255,23 @@ WCHAR* getPathShortName(WCHAR *full)
 
 void* getModuleBaseAddress(DWORD PID,WCHAR *name)
 {
-	HANDLE hSnapShot;
-	hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, PID);
-	MODULEENTRY32W ModuleEntry32;
-	ModuleEntry32.dwSize = sizeof(ModuleEntry32);
-	if (Module32FirstW(hSnapShot, &ModuleEntry32))
-	{
-		do
-		{
-			WCHAR szExt[5];
-			lstrcpyW(szExt, ModuleEntry32.szExePath + lstrlenW(ModuleEntry32.szExePath) - 4);
+    HANDLE hSnapShot;
+    hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, PID);
+    MODULEENTRY32W ModuleEntry32;
+    ModuleEntry32.dwSize = sizeof(ModuleEntry32);
+    if (Module32FirstW(hSnapShot, &ModuleEntry32))
+    {
+        do
+        {
+            WCHAR szExt[5];
+            lstrcpyW(szExt, ModuleEntry32.szExePath + lstrlenW(ModuleEntry32.szExePath) - 4);
             if(lstrcmpiW(getPathShortName(ModuleEntry32.szExePath),name)==0)
                 return ModuleEntry32.modBaseAddr;
-		} while (Module32NextW(hSnapShot, &ModuleEntry32));
-	}
-	CloseHandle(hSnapShot);
-	return NULL;
+        }
+        while (Module32NextW(hSnapShot, &ModuleEntry32));
+    }
+    CloseHandle(hSnapShot);
+    return NULL;
 }
 
 int GetNetMode()
@@ -283,11 +283,9 @@ int GetNetMode()
 
 void DropLiquid(int X,int Y,byte header)
 {
-    if(reg)
-    {
-        byte b[500],raw_code[7];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        int blen=getHexCode("83 3D 00000000 01\
+    byte b[500],raw_code[7];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    int blen=getHexCode("83 3D 00000000 01\
                         0F 84 47000000\
                         FF 05 00000000\
                         51\
@@ -311,62 +309,59 @@ void DropLiquid(int X,int Y,byte header)
                         59\
                         00 00 00000000 00\
                         E9 00 00 00 00",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_flag2=(int*)&b[15];
-        int *d_tile=(int*)&b[24];
-        int *d_X1=(int*)&b[29];
-        int *d_Y1=(int*)&b[34];
-        int *d_liquid=(int*)&b[53];
-        int *d_header=(int*)&b[60];
-        int *d_X2=(int*)&b[65];
-        int *d_Y2=(int*)&b[70];
-        int *d_callSTF=(int*)&b[77];
-        int *d_code=(int*)&b[84];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_flag2=(int)flagAddr;
-        *d_tile=(int)tile;
-        *d_X1=X;
-        *d_Y1=Y;
-        *d_liquid=255;
-        *d_header=header;
-        *d_X2=X;
-        *d_Y2=Y;
-        *d_callSTF=Terraria_WorldGen_SquareTileFrame-(hookAddr+77)-4;
-        memcpy(d_code,raw_code,7);
-        *d_flag2=(int)flagAddr;
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==1)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_flag2=(int*)&b[15];
+    int *d_tile=(int*)&b[24];
+    int *d_X1=(int*)&b[29];
+    int *d_Y1=(int*)&b[34];
+    int *d_liquid=(int*)&b[53];
+    int *d_header=(int*)&b[60];
+    int *d_X2=(int*)&b[65];
+    int *d_Y2=(int*)&b[70];
+    int *d_callSTF=(int*)&b[77];
+    int *d_code=(int*)&b[84];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_flag2=(int)flagAddr;
+    *d_tile=(int)tile;
+    *d_X1=X;
+    *d_Y1=Y;
+    *d_liquid=255;
+    *d_header=header;
+    *d_X2=X;
+    *d_Y2=Y;
+    *d_callSTF=Terraria_WorldGen_SquareTileFrame-(hookAddr+77)-4;
+    memcpy(d_code,raw_code,7);
+    *d_flag2=(int)flagAddr;
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==1)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 void SendNetWater(int X,int Y)
 {
-    if(reg)
-    {
-        byte b[500],raw_code[10];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        int blen=getHexCode("83 3D 00000000 01\
+    byte b[500],raw_code[10];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    int blen=getHexCode("83 3D 00000000 01\
                         0F 84 19000000\
                         FF 05 00000000\
                         51\
@@ -378,53 +373,50 @@ void SendNetWater(int X,int Y)
                         59\
                         00 00 00000000 00\
                         E9 00 00 00 00",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_flag2=(int*)&b[15];
-        int *d_X=(int*)&b[22];
-        int *d_Y=(int*)&b[27];
-        int *d_callSW=(int*)&b[32];
-        int *d_code=(int*)&b[38];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_flag2=(int)flagAddr;
-        *d_X=X;
-        *d_Y=Y;
-        *d_callSW=Terraria_NetMessage_sendWater-(hookAddr+32)-4;
-        memcpy(d_code,raw_code,7);
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==1)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_flag2=(int*)&b[15];
+    int *d_X=(int*)&b[22];
+    int *d_Y=(int*)&b[27];
+    int *d_callSW=(int*)&b[32];
+    int *d_code=(int*)&b[38];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_flag2=(int)flagAddr;
+    *d_X=X;
+    *d_Y=Y;
+    *d_callSW=Terraria_NetMessage_sendWater-(hookAddr+32)-4;
+    memcpy(d_code,raw_code,7);
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==1)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 
 void SendNetMessage(int msgType,int remoteClient,int ignoreClient,int number,float number2,float number3,float number4,int number5,int number6,int number7)
 {
-    if(reg)
-    {
-        int times=1;
-        byte b[500],raw_code[10];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        int blen=getHexCode("813D  00000000  00000000\
+    int times=1;
+    byte b[500],raw_code[10];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    int blen=getHexCode("813D  00000000  00000000\
                         0F84 46000000\
                         51\
                         52\
@@ -447,71 +439,68 @@ void SendNetMessage(int msgType,int remoteClient,int ignoreClient,int number,flo
                         FF 05 00000000\
                         0000 00000000 00\
                         E9 00000000",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_times=(int*)&b[6];
-        int *d_msgType=(int*)&b[19];
-        int *d_remoteClient=(int*)&b[24];
-        int *d_ignoreClient=(int*)&b[29];
-        int *d_number=(int*)&b[39];
-        int *d_number2=(int*)&b[44];
-        int *d_number3=(int*)&b[49];
-        int *d_number4=(int*)&b[54];
-        int *d_number5=(int*)&b[59];
-        int *d_number6=(int*)&b[64];
-        int *d_number7=(int*)&b[69];
-        int *d_jmpSend=(int*)&b[74];
-        int *d_flag2=(int*)&b[82];
-        int *d_code=(int*)&b[86];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_times=times;
-        *d_msgType=msgType;
-        *d_remoteClient=remoteClient;
-        *d_ignoreClient=ignoreClient;
-        *d_number=number;
-        *d_number2=number2;
-        *d_number3=number3;
-        *d_number4=number4;
-        *d_number5=number5;
-        *d_number6=number6;
-        *d_number7=number7;
-        *d_jmpSend=Terraria_NetMessage_SendData-(hookAddr+74)-4;
-        *d_flag2=(int)flagAddr;
-        memcpy(d_code,raw_code,7);
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==times)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_times=(int*)&b[6];
+    int *d_msgType=(int*)&b[19];
+    int *d_remoteClient=(int*)&b[24];
+    int *d_ignoreClient=(int*)&b[29];
+    int *d_number=(int*)&b[39];
+    int *d_number2=(int*)&b[44];
+    int *d_number3=(int*)&b[49];
+    int *d_number4=(int*)&b[54];
+    int *d_number5=(int*)&b[59];
+    int *d_number6=(int*)&b[64];
+    int *d_number7=(int*)&b[69];
+    int *d_jmpSend=(int*)&b[74];
+    int *d_flag2=(int*)&b[82];
+    int *d_code=(int*)&b[86];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_times=times;
+    *d_msgType=msgType;
+    *d_remoteClient=remoteClient;
+    *d_ignoreClient=ignoreClient;
+    *d_number=number;
+    *d_number2=number2;
+    *d_number3=number3;
+    *d_number4=number4;
+    *d_number5=number5;
+    *d_number6=number6;
+    *d_number7=number7;
+    *d_jmpSend=Terraria_NetMessage_SendData-(hookAddr+74)-4;
+    *d_flag2=(int)flagAddr;
+    memcpy(d_code,raw_code,7);
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==times)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 
 void NewNPC(float X,float Y,int Type,int number)
 {
-    if(reg)
-    {
-        byte b[500],raw_code[7];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        int blen=getHexCode(
-                        "813D  00000000  00000000\
+    byte b[500],raw_code[7];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    int blen=getHexCode(
+                 "813D  00000000  00000000\
                         0F84 3B000000\
                         51\
                         52\
@@ -531,206 +520,183 @@ void NewNPC(float X,float Y,int Type,int number)
                         FF 05 00000000\
                         0000 00000000 00\
                         E9 00000000"
-                        ,b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        int *d_flag1=(int*)&b[2];
-        int *d_number=(int*)&b[6];
-        int *d_X=(int*)&b[19];
-        int *d_Y=(int*)&b[24];
-        int *d_Type=(int*)&b[29];
-        int *d_Start=(int*)&b[34];
-        int *d_ai0=(int*)&b[39];
-        int *d_ai1=(int*)&b[44];
-        int *d_ai2=(int*)&b[49];
-        int *d_ai3=(int*)&b[54];
-        int *d_Target=(int*)&b[59];
-        int *d_jmp_NewNPC=(int*)&b[64];
-        int *d_flag2=(int*)&b[72];
-        int *d_code=(int*)&b[76];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_number=number;
-        *d_X=X;
-        *d_Y=Y;
-        *d_Type=Type;
-        *d_Start=0;
-        *d_ai0=0;
-        *d_ai1=0;
-        *d_ai2=0;
-        *d_ai3=0;
-        *d_Target=getMyPlayer();
-        *d_jmp_NewNPC=Terraria_NPC_NewNPC-(hookAddr+64)-4;
-        *d_flag2=(int)flagAddr;
-        memcpy(d_code,raw_code,7);
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==number)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                 ,b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    int *d_flag1=(int*)&b[2];
+    int *d_number=(int*)&b[6];
+    int *d_X=(int*)&b[19];
+    int *d_Y=(int*)&b[24];
+    int *d_Type=(int*)&b[29];
+    int *d_Start=(int*)&b[34];
+    int *d_ai0=(int*)&b[39];
+    int *d_ai1=(int*)&b[44];
+    int *d_ai2=(int*)&b[49];
+    int *d_ai3=(int*)&b[54];
+    int *d_Target=(int*)&b[59];
+    int *d_jmp_NewNPC=(int*)&b[64];
+    int *d_flag2=(int*)&b[72];
+    int *d_code=(int*)&b[76];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_number=number;
+    *d_X=X;
+    *d_Y=Y;
+    *d_Type=Type;
+    *d_Start=0;
+    *d_ai0=0;
+    *d_ai1=0;
+    *d_ai2=0;
+    *d_ai3=0;
+    *d_Target=getMyPlayer();
+    *d_jmp_NewNPC=Terraria_NPC_NewNPC-(hookAddr+64)-4;
+    *d_flag2=(int)flagAddr;
+    memcpy(d_code,raw_code,7);
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==number)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 wchar_t *ReadUUID()
 {
-    if(reg)
-    {
-        void *Terraria_Main_ClientInitialize;
-        SearchFunctionByName(L"Terraria.Main::ClientInitialize",&Terraria_Main_ClientInitialize,1);
-        void *v,*v1;
-        ReadProcessMemory(hProcess,Terraria_Main_ClientInitialize+0x5c,&v,4,NULL);
-        ReadProcessMemory(hProcess,v,&v1,4,NULL);
-        wchar_t *UUID=(wchar_t*)malloc(32+4+1);
-        ReadProcessMemory(hProcess,v1+8,UUID,(32+4+1)*sizeof(wchar_t),NULL);
-        return UUID;
-    }
-    return NULL;
+    void *Terraria_Main_ClientInitialize;
+    SearchFunctionByName(L"Terraria.Main::ClientInitialize",&Terraria_Main_ClientInitialize,1);
+    void *v,*v1;
+    ReadProcessMemory(hProcess,Terraria_Main_ClientInitialize+0x5c,&v,4,NULL);
+    ReadProcessMemory(hProcess,v,&v1,4,NULL);
+    wchar_t *UUID=(wchar_t*)malloc(32+4+1);
+    ReadProcessMemory(hProcess,v1+8,UUID,(32+4+1)*sizeof(wchar_t),NULL);
+    return UUID;
 }
 
 
 
 int RandomUUID()
 {
-    if(reg)
+    void *Terraria_Main_ClientInitialize;
+    SearchFunctionByName(L"Terraria.Main::ClientInitialize",&Terraria_Main_ClientInitialize,1);
+    void *v,*v1;
+    ReadProcessMemory(hProcess,Terraria_Main_ClientInitialize+0x5c,&v,4,NULL);
+    ReadProcessMemory(hProcess,v,&v1,4,NULL);
+    wchar_t uuid[32+4];
     {
-        void *Terraria_Main_ClientInitialize;
-        SearchFunctionByName(L"Terraria.Main::ClientInitialize",&Terraria_Main_ClientInitialize,1);
-        void *v,*v1;
-        ReadProcessMemory(hProcess,Terraria_Main_ClientInitialize+0x5c,&v,4,NULL);
-        ReadProcessMemory(hProcess,v,&v1,4,NULL);
-        wchar_t uuid[32+4];
+        srand((unsigned)time(NULL));
+        char tmp_uuid[32+4];
+        for(int i=0; i<32+4; i++)
         {
-            srand((unsigned)time(NULL));
-            char tmp_uuid[32+4];
-            for(int i=0; i<32+4; i++)
+            if(i==8||i==13||i==18||i==23)
             {
-                if(i==8||i==13||i==18||i==23)
-                {
-                    tmp_uuid[i]='-';
-                    continue;
-                }
-                int d=rand()%16;
-                sprintf(&tmp_uuid[i],"%x",d);
+                tmp_uuid[i]='-';
+                continue;
             }
-            wsprintfW(uuid,L"%hs",tmp_uuid);
+            int d=rand()%16;
+            sprintf(&tmp_uuid[i],"%x",d);
         }
-        WriteProcessMemory(hProcess,v1+8,uuid,(32+4)*sizeof(wchar_t),NULL);
-        return 1;
+        wsprintfW(uuid,L"%hs",tmp_uuid);
     }
-    return 0;
+    WriteProcessMemory(hProcess,v1+8,uuid,(32+4)*sizeof(wchar_t),NULL);
+    return 1;
 }
 
 int De_EnableAllRecipes()
 {
-    if(reg)
+    void *Terraria_Recipe_FindRecipes;
+    SearchFunctionByName(L"Terraria.Recipe::FindRecipes",&Terraria_Recipe_FindRecipes,1);
     {
-        void *Terraria_Recipe_FindRecipes;
-        SearchFunctionByName(L"Terraria.Recipe::FindRecipes",&Terraria_Recipe_FindRecipes,1);
-        {
-            void *addr;
-            ReadProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xd,&addr,4,NULL);
-            addr+=(int)Terraria_Recipe_FindRecipes+0xd+4;
-            char str[20];
-            sprintf(str,"%x",(unsigned)addr);
-            VirtualFreeEx(hProcess,addr,0,MEM_RELEASE);
-        }
-        byte b[6];
-        int blen=getHexCode("8D BD 38 FF FF FF",b);
-        WriteProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xc,b,blen,NULL);
-        return 1;
+        void *addr;
+        ReadProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xd,&addr,4,NULL);
+        addr+=(int)Terraria_Recipe_FindRecipes+0xd+4;
+        char str[20];
+        sprintf(str,"%x",(unsigned)addr);
+        VirtualFreeEx(hProcess,addr,0,MEM_RELEASE);
     }
-    return 0;
+    byte b[6];
+    int blen=getHexCode("8D BD 38 FF FF FF",b);
+    WriteProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xc,b,blen,NULL);
+    return 1;
 }
 
 int EnableAllRecipes()
 {
-    if(reg)
+    void *Terraria_Recipe_FindRecipes;
+    SearchFunctionByName(L"Terraria.Recipe::FindRecipes",&Terraria_Recipe_FindRecipes,1);
+    byte b[256];
+    byte jmp_code[6];
+    int blen=getHexCode("8D 65 F4  5B 5E 5F 5D C3",b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    jmp_code[0]=0xe9;
+    jmp_code[5]=0x90;
+    int *d_jmp_to=(int*)&jmp_code[1];
+    *d_jmp_to=hookAddr-(Terraria_Recipe_FindRecipes+0xC)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xC,jmp_code,6,NULL);
+    //Sleep(60);
+    void *recipeArrAddr=0,*maxRecipe=0;
     {
-        void *Terraria_Recipe_FindRecipes;
-        SearchFunctionByName(L"Terraria.Recipe::FindRecipes",&Terraria_Recipe_FindRecipes,1);
-        byte b[256];
-        byte jmp_code[6];
-        int blen=getHexCode("8D 65 F4  5B 5E 5F 5D C3",b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        jmp_code[0]=0xe9;
-        jmp_code[5]=0x90;
-        int *d_jmp_to=(int*)&jmp_code[1];
-        *d_jmp_to=hookAddr-(Terraria_Recipe_FindRecipes+0xC)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0xC,jmp_code,6,NULL);
-        //Sleep(60);
-        void *recipeArrAddr=0,*maxRecipe=0;
-        {
-            void *v;
-            ReadProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0x1c,&v,4,NULL);
-            ReadProcessMemory(hProcess,v,&recipeArrAddr,4,NULL);
-            v=(void*)aobscan(hProcess,"00 8b 85 e8 fd ff ff 3b 05",0);
-            ReadProcessMemory(hProcess,v+0x9,&maxRecipe,4,NULL);
-            /*char str[20];
-            sprintf(str,"%x",v);
-            MessageBox(0,str,str,MB_OK);*/
-        }
-        int MAX=2000;
-        for(int i=0; i<MAX; i++)
-        {
-            void* addr=recipeArrAddr+0x08+i*0x04;
-            WriteProcessMemory(hProcess,addr,&i,4,NULL);
-        }
-        WriteProcessMemory(hProcess,maxRecipe,&MAX,4,NULL);
-        return 1;
+        void *v;
+        ReadProcessMemory(hProcess,Terraria_Recipe_FindRecipes+0x1c,&v,4,NULL);
+        ReadProcessMemory(hProcess,v,&recipeArrAddr,4,NULL);
+        v=(void*)aobscan(hProcess,"00 8b 85 e8 fd ff ff 3b 05",0);
+        ReadProcessMemory(hProcess,v+0x9,&maxRecipe,4,NULL);
+        /*char str[20];
+        sprintf(str,"%x",v);
+        MessageBox(0,str,str,MB_OK);*/
     }
-    return 0;
+    int MAX=2000;
+    for(int i=0; i<MAX; i++)
+    {
+        void* addr=recipeArrAddr+0x08+i*0x04;
+        WriteProcessMemory(hProcess,addr,&i,4,NULL);
+    }
+    WriteProcessMemory(hProcess,maxRecipe,&MAX,4,NULL);
+    return 1;
 }
 
 byte getNPCActive(int nid)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(npcarrbase,&v,1,2,0x8+nid*0x4,0x18);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(npcarrbase,&v,1,2,0x8+nid*0x4,0x18);
+    return v;
 }
 
 void NPC_AddBuff(int nid,int buff,int time)
 {
-    if(reg)
+    int addr;
     {
-        int addr;
-        {
-            ReadProcessMemory(hProcess,(void*)(npcarrbase+0x08+0x04*nid),&addr,4,NULL);
-        }
-        byte b[500],raw_code[7];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        ///mov flag,0
-        ///push ecx
-        ///push edx
-        ///mov ecx,base
-        ///mov edx,buffType
-        ///push buffTime
-        ///push quiet
-        ///call Terraria.NPC::AddBuff
-        ///pop edx
-        ///pop ecx
-        ///fild dword ptr [edx+00000340]
-        ///mov flag,1
-        ///jmp back
-        int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
+        ReadProcessMemory(hProcess,(void*)(npcarrbase+0x08+0x04*nid),&addr,4,NULL);
+    }
+    byte b[500],raw_code[7];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    ///mov flag,0
+    ///push ecx
+    ///push edx
+    ///mov ecx,base
+    ///mov edx,buffType
+    ///push buffTime
+    ///push quiet
+    ///call Terraria.NPC::AddBuff
+    ///pop edx
+    ///pop ecx
+    ///fild dword ptr [edx+00000340]
+    ///mov flag,1
+    ///jmp back
+    int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
                         51\
                         52\
                         B9 00 00 00 00\
@@ -743,70 +709,67 @@ void NPC_AddBuff(int nid,int buff,int time)
                         0000 00000000 00\
                         C7 05 00 00 00 00 01 00 00 00\
                         E9 00 00 00 00",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_Base=(int*)&b[13];
-        int *d_buffType=(int*)&b[18];
-        int *d_buffTime=(int*)&b[23];
-        int *d_jmpAddBuff=(int*)&b[30];
-        int *d_code=(int*)&b[36];
-        int *d_flag2=(int*)&b[45];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_Base=addr;
-        *d_buffType=buff;
-        *d_buffTime=time;
-        *d_jmpAddBuff=Terraria_NPC_AddBuff-(hookAddr+30)-4;
-        memcpy(d_code,raw_code,7);
-        *d_flag2=(int)flagAddr;
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==1)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_Base=(int*)&b[13];
+    int *d_buffType=(int*)&b[18];
+    int *d_buffTime=(int*)&b[23];
+    int *d_jmpAddBuff=(int*)&b[30];
+    int *d_code=(int*)&b[36];
+    int *d_flag2=(int*)&b[45];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_Base=addr;
+    *d_buffType=buff;
+    *d_buffTime=time;
+    *d_jmpAddBuff=Terraria_NPC_AddBuff-(hookAddr+30)-4;
+    memcpy(d_code,raw_code,7);
+    *d_flag2=(int)flagAddr;
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==1)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 void Player_AddBuff(int pid,int buff,int time)
 {
-    if(reg)
+    int addr;
     {
-        int addr;
-        {
-            ReadProcessMemory(hProcess,(void*)(playerarrbase+0x08+0x04*pid),&addr,4,NULL);
-        }
-        byte b[500],raw_code[7];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        ///mov flag,0
-        ///push ecx
-        ///push edx
-        ///mov ecx,base
-        ///mov edx,buffType
-        ///push buffTime
-        ///push quiet
-        ///call Terraria.NPC::AddBuff
-        ///pop edx
-        ///pop ecx
-        ///fild dword ptr [edx+00000340]
-        ///mov flag,1
-        ///jmp back
-        int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
+        ReadProcessMemory(hProcess,(void*)(playerarrbase+0x08+0x04*pid),&addr,4,NULL);
+    }
+    byte b[500],raw_code[7];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    ///mov flag,0
+    ///push ecx
+    ///push edx
+    ///mov ecx,base
+    ///mov edx,buffType
+    ///push buffTime
+    ///push quiet
+    ///call Terraria.NPC::AddBuff
+    ///pop edx
+    ///pop ecx
+    ///fild dword ptr [edx+00000340]
+    ///mov flag,1
+    ///jmp back
+    int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
                         51\
                         52\
                         B9 00 00 00 00\
@@ -819,101 +782,90 @@ void Player_AddBuff(int pid,int buff,int time)
                         0000 00000000 00\
                         C7 05 00 00 00 00 01 00 00 00\
                         E9 00 00 00 00",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_Base=(int*)&b[13];
-        int *d_buffType=(int*)&b[18];
-        int *d_buffTime=(int*)&b[23];
-        int *d_jmpAddBuff=(int*)&b[30];
-        int *d_code=(int*)&b[36];
-        int *d_flag2=(int*)&b[45];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_Base=addr;
-        *d_buffType=buff;
-        *d_buffTime=time;
-        *d_jmpAddBuff=Terraria_Player_AddBuff-(hookAddr+30)-4;
-        memcpy(d_code,raw_code,7);
-        *d_flag2=(int)flagAddr;
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==1)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_Base=(int*)&b[13];
+    int *d_buffType=(int*)&b[18];
+    int *d_buffTime=(int*)&b[23];
+    int *d_jmpAddBuff=(int*)&b[30];
+    int *d_code=(int*)&b[36];
+    int *d_flag2=(int*)&b[45];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_Base=addr;
+    *d_buffType=buff;
+    *d_buffTime=time;
+    *d_jmpAddBuff=Terraria_Player_AddBuff-(hookAddr+30)-4;
+    memcpy(d_code,raw_code,7);
+    *d_flag2=(int)flagAddr;
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==1)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 
 int StrengthenVampireKnives()
 {
-    if(reg)
-    {
-        void*path=(void*)aobscan(hProcess,"81 78 6c 21 06 00 00 0f 85",0);
-        void* numberAddr=path+0x13;
-        int v=0x100;
-        WriteProcessMemory(hProcess,numberAddr,&v,4,NULL);
-        return 1;
-    }
-    return 0;
+    void*path=(void*)aobscan(hProcess,"81 78 6c 21 06 00 00 0f 85",0);
+    void* numberAddr=path+0x13;
+    int v=0x100;
+    WriteProcessMemory(hProcess,numberAddr,&v,4,NULL);
+    return 1;
 }
 
 int De_StrengthenVampireKnives()
 {
-    if(reg)
-    {
-        void*path=(void*)aobscan(hProcess,"81 78 6c 21 06 00 00 0f 85",0);
-        void* numberAddr=path+0x13;
-        int v=0x4;
-        WriteProcessMemory(hProcess,numberAddr,&v,4,NULL);
-        return 1;
-    }
-    return 0;
+    void*path=(void*)aobscan(hProcess,"81 78 6c 21 06 00 00 0f 85",0);
+    void* numberAddr=path+0x13;
+    int v=0x4;
+    WriteProcessMemory(hProcess,numberAddr,&v,4,NULL);
+    return 1;
 }
 
 void SetItemDefaults(int slot,int type,int prefix)
 {
-    if(reg)
+    int addr;
     {
-        int addr;
-        {
-            int data;
-            ReadProcessMemory(hProcess,(void*)(getPlayerBaseAddress(getMyPlayer())+itemArrOff),&data,4,NULL);
-            ReadProcessMemory(hProcess,(void*)(data+0x08+0x04*slot),&addr,4,NULL);
-        }
-        byte b[500],raw_code[7];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        ///mov flag,0
-        ///push ecx
-        ///push edx
-        ///mov ecx,base
-        ///mov edx,Type
-        ///push noMatCheck
-        ///call Terraria.Item::SetDefaults
-        ///mov ecx,base
-        ///mov edx,Prefix
-        ///call Terraria.Item::Prefix
-        ///pop edx
-        ///pop ecx
-        ///fild dword ptr [edx+00000340]
-        ///mov flag,1
-        ///jmp back
-        int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
+        int data;
+        ReadProcessMemory(hProcess,(void*)(getPlayerBaseAddress(getMyPlayer())+itemArrOff),&data,4,NULL);
+        ReadProcessMemory(hProcess,(void*)(data+0x08+0x04*slot),&addr,4,NULL);
+    }
+    byte b[500],raw_code[7];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    ///mov flag,0
+    ///push ecx
+    ///push edx
+    ///mov ecx,base
+    ///mov edx,Type
+    ///push noMatCheck
+    ///call Terraria.Item::SetDefaults
+    ///mov ecx,base
+    ///mov edx,Prefix
+    ///call Terraria.Item::Prefix
+    ///pop edx
+    ///pop ecx
+    ///fild dword ptr [edx+00000340]
+    ///mov flag,1
+    ///jmp back
+    int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
                         51\
                         52\
                         B9 00 00 00 00\
@@ -928,48 +880,47 @@ void SetItemDefaults(int slot,int type,int prefix)
                         00 00 00000000 00\
                         C7 05 00 00 00 00 01 00 00 00\
                         E9 00 00 00 00",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        /*char str[20];
-        sprintf(str,"%x",hookAddr);
-        MessageBox(0,str,str,MB_OK);*/
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_itemBase=(int*)&b[13];
-        int *d_Type=(int*)&b[18];
-        int *d_jmpSetDefaults=(int*)&b[25];
-        int *d_itemBase1=(int*)&b[30];
-        int *d_Prefix=(int*)&b[35];
-        int *d_jmpPrefix=(int*)&b[40];
-        int *d_code=(int*)&b[46];
-        int *d_flag2=(int*)&b[55];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_itemBase=addr;
-        *d_Type=type;
-        *d_jmpSetDefaults=Terraria_Item_SetDefaults-(hookAddr+25)-4;
-        *d_itemBase1=addr;
-        *d_Prefix=prefix;
-        *d_jmpPrefix=Terraria_Item_Prefix-(hookAddr+40)-4;
-        memcpy(d_code,raw_code,7);
-        *d_flag2=(int)flagAddr;
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==1)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        /*VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);*/
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    /*char str[20];
+    sprintf(str,"%x",hookAddr);
+    MessageBox(0,str,str,MB_OK);*/
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_itemBase=(int*)&b[13];
+    int *d_Type=(int*)&b[18];
+    int *d_jmpSetDefaults=(int*)&b[25];
+    int *d_itemBase1=(int*)&b[30];
+    int *d_Prefix=(int*)&b[35];
+    int *d_jmpPrefix=(int*)&b[40];
+    int *d_code=(int*)&b[46];
+    int *d_flag2=(int*)&b[55];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_itemBase=addr;
+    *d_Type=type;
+    *d_jmpSetDefaults=Terraria_Item_SetDefaults-(hookAddr+25)-4;
+    *d_itemBase1=addr;
+    *d_Prefix=prefix;
+    *d_jmpPrefix=Terraria_Item_Prefix-(hookAddr+40)-4;
+    memcpy(d_code,raw_code,7);
+    *d_flag2=(int)flagAddr;
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==1)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 
@@ -979,7 +930,7 @@ void setItemArrayOffset(int off)
     itemArrOff=off;
 }
 
-byte PassWord(char *w)
+/*byte PassWord(char *w)
 {
     char cpuid[20];
     getCPUID(cpuid);
@@ -1023,7 +974,7 @@ byte PassWord(char *w)
     }
     free(rst);
     return reg;
-}
+}*/
 
 LPSTR GetProcessIdByName(int pid)
 {
@@ -1189,7 +1140,8 @@ void un_inline_hook(HANDLE hProcess,char *aobstr,char *headstr,int off)
 }
 void _Read_FromBase(void* baseaddr,void*v,int len,int n,...)
 {
-    if(!baseaddr)return;
+    if(!baseaddr)
+        return;
     va_list args;
     va_start(args,n);
     //int baseaddr=getPlayerBaseAddress(getMyPlayer());
@@ -1206,7 +1158,8 @@ void _Read_FromBase(void* baseaddr,void*v,int len,int n,...)
 
 void _Hack(void* baseaddr,void*v,int len,int n,...)
 {
-    if(!baseaddr)return;
+    if(!baseaddr)
+        return;
     va_list args;
     va_start(args,n);
     //int baseaddr=getPlayerBaseAddress(getMyPlayer());
@@ -1254,9 +1207,12 @@ int memmem(char * a, int alen, char * b, int blen)
 
 int ctoh(char hex)
 {
-    if (hex >= '0' && hex <= '9') return hex - '0';
-    if (hex >= 'A' && hex <= 'F') return hex - 'A' + 10;
-    if (hex >= 'a' && hex <= 'f') return hex - 'a' + 10;
+    if (hex >= '0' && hex <= '9')
+        return hex - '0';
+    if (hex >= 'A' && hex <= 'F')
+        return hex - 'A' + 10;
+    if (hex >= 'a' && hex <= 'f')
+        return hex - 'a' + 10;
     return 0;
 }
 
@@ -1324,385 +1280,296 @@ int InfiniteHealth()
 
 int InfiniteMana()
 {
-    if(reg)
-    {
-        int a=search_replace("29 BE 44 03 00 00","01 BE 44 03 00 00");
-        int b=search_replace("29 82 44 03 00 00","01 82 44 03 00 00");
-        return a||b;
-    }
+    int a=search_replace("29 BE 44 03 00 00","01 BE 44 03 00 00");
+    int b=search_replace("29 82 44 03 00 00","01 82 44 03 00 00");
+    return a||b;
     return 0;
 }
 
 int InfiniteMinion()
 {
-    if(reg)
-        return search_replace("C7 86 14 02 00 00 01 00 00 00","C7 86 14 02 00 00 0 FF FF FF");
-    return 0;
+    return search_replace("C7 86 14 02 00 00 01 00 00 00","C7 86 14 02 00 00 0 FF FF FF");
 }
 
 int InfiniteItems()
 {
-    if(reg)
-        return search_replace("FF 88 80 00 00 00 8B 45 08","90 90 90 90 90 90 8B 45 08");
-    return 0;
+    return search_replace("FF 88 80 00 00 00 8B 45 08","90 90 90 90 90 90 8B 45 08");
 }
 
 int InfiniteFly()
 {
-    if(reg)
-        return search_replace("D9 99 20 02 00 00 5D C3 00","90 90 90 90 90 90 5D C3 00");
-    return 0;
+    return search_replace("D9 99 20 02 00 00 5D C3 00","90 90 90 90 90 90 5D C3 00");
 }
 
 int AwfulFishingSkill()
 {
-    if(reg)
-        return search_replace("83 83 00 02 00 00 0F E9 A1 3B 00 00","83 83 00 02 00 00 64 E9 A1 3B 00 00");
-    return 0;
+    return search_replace("83 83 00 02 00 00 0F E9 A1 3B 00 00","83 83 00 02 00 00 64 E9 A1 3B 00 00");
 }
 
 int GhostMode()
 {
     char v=1;
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,1,1,0x549);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,1,1,0x549);
     return 0;
 }
 
 int InfiniteOxygen()
 {
-    if(reg)
-        return search_replace("FF 88 B4 02 00 00 83 B8 B4 02 00 00 00","90 90 90 90 90 90 83 B8 B4 02 00 00 00");
-    return 0;
+    return search_replace("FF 88 B4 02 00 00 83 B8 B4 02 00 00 00","90 90 90 90 90 90 83 B8 B4 02 00 00 00");
 }
 
 int InfiniteBullet()
 {
-    if(reg)
-        return search_replace("FF 8B 80 00 00 00 83 BB 80","90 90 90 90 90 90");
-    return 0;
+    return search_replace("FF 8B 80 00 00 00 83 BB 80","90 90 90 90 90 90");
 }
 
 int NoRespawnTime()
 {
-    if(reg)
-        return search_replace("C7 86 E8 02 00 00 58 02 00 00","C7 86 E8 02 00 00 00 00 00 00");
-    return 0;
+    return search_replace("C7 86 E8 02 00 00 58 02 00 00","C7 86 E8 02 00 00 00 00 00 00");
 }
 
 int AttackThroughWalls()
 {
-    if(reg)
-        return search_replace("0F 85 D4 03 00 00 8D 55","E9 D5 03 00 00 90 8D 55");
-    return 0;
+    return search_replace("0F 85 D4 03 00 00 8D 55","E9 D5 03 00 00 90 8D 55");
 }
 
 int ProjectileIgnoreTiles()
 {
-    if(reg)
-    {
-        void* Terraria_Projectile_HandleMovement;
-        SearchFunctionByName(L"Terraria.Projectile::HandleMovement",&Terraria_Projectile_HandleMovement,1);
-        int aAddr=(int)ceil((int)Terraria_Projectile_HandleMovement/0x10000)*0x10000;
-        byte v=0x8d;
-        WriteProcessMemory(hProcess,(void*)aobscan(hProcess,"8d 7d d8",aAddr)-0x5,&v,1,NULL);
-        return 1;
-    }
-    return 0;
+    void* Terraria_Projectile_HandleMovement;
+    SearchFunctionByName(L"Terraria.Projectile::HandleMovement",&Terraria_Projectile_HandleMovement,1);
+    int aAddr=(int)ceil((int)Terraria_Projectile_HandleMovement/0x10000)*0x10000;
+    byte v=0x8d;
+    WriteProcessMemory(hProcess,(void*)aobscan(hProcess,"8d 7d d8",aAddr)-0x5,&v,1,NULL);
+    return 1;
 }
 
 int JumpAsFeather()
 {
-
-    if(reg)
+    int path=aobscan(hProcess,"89 96 14 04 00 00",0);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"89 96 14 04 00 00",0);
-        if(path<=0)
-        {
-            return 0;
-        }
-        path-=6;
-        byte ASM_CODE[]= {0xC7,0x86,0x10,0x04,0x00,0x00,0x00,0x00,0x20,0x41};
-        inline_hook(hProcess,(void*)path,6,ASM_CODE,sizeof(ASM_CODE));
-        return 1;
+        return 0;
     }
-    return 0;
+    path-=6;
+    byte ASM_CODE[]= {0xC7,0x86,0x10,0x04,0x00,0x00,0x00,0x00,0x20,0x41};
+    inline_hook(hProcess,(void*)path,6,ASM_CODE,sizeof(ASM_CODE));
+    return 1;
 }
 
 
 int FastSpeed()
 {
-
-    if(reg)
+    int path=aobscan(hProcess,"D9 9E BC 03 00 00 88 96 4B 05 00 00 88 96 4D 05 00 00",0);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"D9 9E BC 03 00 00 88 96 4B 05 00 00 88 96 4D 05 00 00",0);
-        if(path<=0)
-        {
-            return 0;
-        }
-        byte ASM_CODE[]= {0xC7,0x86,itemArrOff,0x03,0x00,0x00,0x00,0x20,0x4B,0x46, 0xC7,0x86,0xE4,0x03,0x00,0x00,0x00,0x20,0x4B,0x46};//700????0xC7,0x86,itemArrOff,0x03,0x00,0x00,0x00,0x40,0x9C,0x45,0xC7,0x86,0xE4,0x03,0x00,0x00,0x00,0x40,0x9C,0x45
-        inline_hook(hProcess,(void*)path,6,ASM_CODE,sizeof(ASM_CODE));
-        return 1;
+        return 0;
     }
-    return 0;
+    byte ASM_CODE[]= {0xC7,0x86,itemArrOff,0x03,0x00,0x00,0x00,0x20,0x4B,0x46, 0xC7,0x86,0xE4,0x03,0x00,0x00,0x00,0x20,0x4B,0x46};//700????0xC7,0x86,itemArrOff,0x03,0x00,0x00,0x00,0x40,0x9C,0x45,0xC7,0x86,0xE4,0x03,0x00,0x00,0x00,0x40,0x9C,0x45
+    inline_hook(hProcess,(void*)path,6,ASM_CODE,sizeof(ASM_CODE));
+    return 1;
 }
 
 
 int KillAllNPC()
 {
-
-    if(reg)
+    int path=aobscan(hProcess,"8B 80 F4 00 00 00 8B 95 C4 B0 FF FF 3B 82 F8 00 00 00 0F 8C",0);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"8B 80 F4 00 00 00 8B 95 C4 B0 FF FF 3B 82 F8 00 00 00 0F 8C",0);
-        if(path<=0)
-        {
-            return 0;
-        }
-        byte ASM_CODE[]= {0xC7,0x80,0xF4,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-        inline_hook(hProcess,(void*)path,6,ASM_CODE,sizeof(ASM_CODE));
-        return 1;
+        return 0;
     }
-    return 0;
+    byte ASM_CODE[]= {0xC7,0x80,0xF4,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+    inline_hook(hProcess,(void*)path,6,ASM_CODE,sizeof(ASM_CODE));
+    return 1;
 }
 
 int GrabItemFarAway()
 {
-    if(reg)
-    {
-        int path=aobscan(hProcess,"80 BB 2E 06 00 00 00 74",0);
-        int a=path+20;
-        int b=path+15;
-        int c=path+7;
-        int y=path+23;
-        int rangeaddr;
-        ReadProcessMemory(hProcess,(void*)y,&rangeaddr,4,NULL);
-        byte co[]= {0x90,0x90};
-        WriteProcessMemory(hProcess,(void*)a,(void*)&co[0],2,NULL);
-        WriteProcessMemory(hProcess,(void*)b,(void*)&co[0],2,NULL);
-        WriteProcessMemory(hProcess,(void*)c,(void*)&co[0],2,NULL);
-        int range=1000;
-        WriteProcessMemory(hProcess,(void*)rangeaddr,(void*)&range,4,NULL);
-        return 1;
-    }
-    return 0;
+    int path=aobscan(hProcess,"80 BB 2E 06 00 00 00 74",0);
+    int a=path+20;
+    int b=path+15;
+    int c=path+7;
+    int y=path+23;
+    int rangeaddr;
+    ReadProcessMemory(hProcess,(void*)y,&rangeaddr,4,NULL);
+    byte co[]= {0x90,0x90};
+    WriteProcessMemory(hProcess,(void*)a,(void*)&co[0],2,NULL);
+    WriteProcessMemory(hProcess,(void*)b,(void*)&co[0],2,NULL);
+    WriteProcessMemory(hProcess,(void*)c,(void*)&co[0],2,NULL);
+    int range=1000;
+    WriteProcessMemory(hProcess,(void*)rangeaddr,(void*)&range,4,NULL);
+    return 1;
 }
 
 int ToggleTime()
 {
-
-    if(reg)
+    int path1=aobscan(hProcess,"8B 48 28 39 09 FF 15",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"8B 48 28 39 09 FF 15",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1+0x84;
-        int timeaddr;
-        byte t;
-        ReadProcessMemory(hProcess,(void*)path,&timeaddr,4,NULL);
-        ReadProcessMemory(hProcess,(void*)timeaddr,&t,1,NULL);
-        if(t==0)
-        {
-            t=1;
-        }
-        else
-        {
-            t=0;
-        }
-        WriteProcessMemory(hProcess,(void*)timeaddr,(void*)&t,1,NULL);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1+0x84;
+    int timeaddr;
+    byte t;
+    ReadProcessMemory(hProcess,(void*)path,&timeaddr,4,NULL);
+    ReadProcessMemory(hProcess,(void*)timeaddr,&t,1,NULL);
+    if(t==0)
+    {
+        t=1;
+    }
+    else
+    {
+        t=0;
+    }
+    WriteProcessMemory(hProcess,(void*)timeaddr,(void*)&t,1,NULL);
+    return 1;
 }
 
 int AddExtraSlots()
 {
-    if(reg)
+    int path=aobscan(hProcess,"C7 86 40 01 00 00 01 00 00 00 EB 08 33 D2",0);
+    byte t[]= {0x90,0x90}; //74 0C
+    WriteProcessMemory(hProcess,(void*)(path-2),(void*)&t[0],2,NULL);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"C7 86 40 01 00 00 01 00 00 00 EB 08 33 D2",0);
-        byte t[]= {0x90,0x90}; //74 0C
-        WriteProcessMemory(hProcess,(void*)(path-2),(void*)&t[0],2,NULL);
-        if(path<=0)
-        {
-            return 0;
-        }
-        byte ASM_CODE[]= {0xC7,0x86,0x40,0x01,0x00,0x00,0x02,0x00,0x00,0x00};
-        inline_hook(hProcess,(void*)path+0x0E,6,ASM_CODE,sizeof(ASM_CODE));
-        return 1;
+        return 0;
     }
-    return 0;
+    byte ASM_CODE[]= {0xC7,0x86,0x40,0x01,0x00,0x00,0x02,0x00,0x00,0x00};
+    inline_hook(hProcess,(void*)path+0x0E,6,ASM_CODE,sizeof(ASM_CODE));
+    return 1;
 }
 
 
 
 int PumpkinMoon()
 {
-    if(reg)
-    {
-        void* Terraria_Main_startPumpkinMoon;
-        SearchFunctionByName(L"Terraria.Main::startPumpkinMoon",&Terraria_Main_startPumpkinMoon,1);
-        void* pmaddr;
-        ReadProcessMemory(hProcess,Terraria_Main_startPumpkinMoon+0x8,&pmaddr,4,NULL);
-        int t=0;
-        ReadProcessMemory(hProcess,pmaddr,&t,1,NULL);
-        t=t==0?1:0;
-        WriteProcessMemory(hProcess,pmaddr,(void*)&t,1,NULL);
-        return 1;
-    }
-    return 0;
+    void* Terraria_Main_startPumpkinMoon;
+    SearchFunctionByName(L"Terraria.Main::startPumpkinMoon",&Terraria_Main_startPumpkinMoon,1);
+    void* pmaddr;
+    ReadProcessMemory(hProcess,Terraria_Main_startPumpkinMoon+0x8,&pmaddr,4,NULL);
+    int t=0;
+    ReadProcessMemory(hProcess,pmaddr,&t,1,NULL);
+    t=t==0?1:0;
+    WriteProcessMemory(hProcess,pmaddr,(void*)&t,1,NULL);
+    return 1;
 }
 
 int SnowMoon()
 {
-    if(reg)
-    {
-        void* Terraria_Main_startPumpkinMoon;
-        SearchFunctionByName(L"Terraria.Main::startPumpkinMoon",&Terraria_Main_startPumpkinMoon,1);
-        void* smaddr;
-        ReadProcessMemory(hProcess,Terraria_Main_startPumpkinMoon+0xf,&smaddr,4,NULL);
-        int t=0;
-        ReadProcessMemory(hProcess,smaddr,&t,1,NULL);
-        t=t==0?1:0;
-        WriteProcessMemory(hProcess,smaddr,(void*)&t,1,NULL);
-        return 1;
-    }
-    return 0;
+    void* Terraria_Main_startPumpkinMoon;
+    SearchFunctionByName(L"Terraria.Main::startPumpkinMoon",&Terraria_Main_startPumpkinMoon,1);
+    void* smaddr;
+    ReadProcessMemory(hProcess,Terraria_Main_startPumpkinMoon+0xf,&smaddr,4,NULL);
+    int t=0;
+    ReadProcessMemory(hProcess,smaddr,&t,1,NULL);
+    t=t==0?1:0;
+    WriteProcessMemory(hProcess,smaddr,(void*)&t,1,NULL);
+    return 1;
 }
 
 int BloodMoon()
 {
-    if(reg)
-    {
-        void* Terraria_Main_startPumpkinMoon;
-        SearchFunctionByName(L"Terraria.Main::startPumpkinMoon",&Terraria_Main_startPumpkinMoon,1);
-        void* bmaddr;
-        ReadProcessMemory(hProcess,Terraria_Main_startPumpkinMoon+0x16,&bmaddr,4,NULL);
-        int t=0;
-        ReadProcessMemory(hProcess,(void*)(bmaddr),&t,1,NULL);
-        t=t==0?1:0;
-        WriteProcessMemory(hProcess,(void*)bmaddr,(void*)&t,1,NULL);
-        return 1;
-    }
-    return 0;
+    void* Terraria_Main_startPumpkinMoon;
+    SearchFunctionByName(L"Terraria.Main::startPumpkinMoon",&Terraria_Main_startPumpkinMoon,1);
+    void* bmaddr;
+    ReadProcessMemory(hProcess,Terraria_Main_startPumpkinMoon+0x16,&bmaddr,4,NULL);
+    int t=0;
+    ReadProcessMemory(hProcess,(void*)(bmaddr),&t,1,NULL);
+    t=t==0?1:0;
+    WriteProcessMemory(hProcess,(void*)bmaddr,(void*)&t,1,NULL);
+    return 1;
 }
 
 int Eclipse()
 {
-    if(reg)
+    int path=aobscan(hProcess,"80 B8 83 01 00 00 00 74 15",0);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"80 B8 83 01 00 00 00 74 15",0);
-        if(path<=0)
-        {
-            return 0;
-        }
-        int bmaddr;
-        ReadProcessMemory(hProcess,(void*)(path+0x48),&bmaddr,4,NULL);
-        int t;
-        ReadProcessMemory(hProcess,(void*)(bmaddr),&t,1,NULL);
-        if(t==0)
-        {
-            t=1;
-        }
-        else
-        {
-            t=0;
-        }
-        WriteProcessMemory(hProcess,(void*)bmaddr,(void*)&t,1,NULL);
-        return 1;
+        return 0;
     }
-    return 0;
+    int bmaddr;
+    ReadProcessMemory(hProcess,(void*)(path+0x48),&bmaddr,4,NULL);
+    int t;
+    ReadProcessMemory(hProcess,(void*)(bmaddr),&t,1,NULL);
+    if(t==0)
+    {
+        t=1;
+    }
+    else
+    {
+        t=0;
+    }
+    WriteProcessMemory(hProcess,(void*)bmaddr,(void*)&t,1,NULL);
+    return 1;
 }
 
 int SunDial()
 {
-    if(reg)
-    {
-        void* Terraria_Main_UpdateSundial;
-        SearchFunctionByName(L"Terraria.Main::UpdateSundial",&Terraria_Main_UpdateSundial,1);
-        void* saddr;
-        ReadProcessMemory(hProcess,Terraria_Main_UpdateSundial+0x2,&saddr,4,NULL);
-        int t=0;
-        ReadProcessMemory(hProcess,(void*)(saddr),&t,1,NULL);
-        t=t==0?1:0;
-        WriteProcessMemory(hProcess,(void*)saddr,(void*)&t,1,NULL);
-        return 1;
-    }
-    return 0;
+    void* Terraria_Main_UpdateSundial;
+    SearchFunctionByName(L"Terraria.Main::UpdateSundial",&Terraria_Main_UpdateSundial,1);
+    void* saddr;
+    ReadProcessMemory(hProcess,Terraria_Main_UpdateSundial+0x2,&saddr,4,NULL);
+    int t=0;
+    ReadProcessMemory(hProcess,(void*)(saddr),&t,1,NULL);
+    t=t==0?1:0;
+    WriteProcessMemory(hProcess,(void*)saddr,(void*)&t,1,NULL);
+    return 1;
 }
 
 
 int GoldHoleDropBag()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"8D 85 08 C7 FF FF D9 40 04",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"8D 85 08 C7 FF FF D9 40 04",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-0x0c;
-        byte b[30];
-        int len=getHexCode("68 04 0D 00 00 6A 01 6A 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-0x0c;
+    byte b[30];
+    int len=getHexCode("68 04 0D 00 00 6A 01 6A 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
 int SlimeGunBurn()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"8B 95 CC F3 FF FF 39 09 FF",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"8B 95 CC F3 FF FF 39 09 FF",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-0x0d;
-        byte b[40];
-        int len=getHexCode("68 c0 4b 03 00  6a 00  8b 8d 2c 94 ff ff  ba 99 00 00 00     90 39 09",b);///99 /2c
-        WriteProcessMemory(hProcess,(void*)path,(void*)&b,len,NULL);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-0x0d;
+    byte b[40];
+    int len=getHexCode("68 c0 4b 03 00  6a 00  8b 8d 2c 94 ff ff  ba 99 00 00 00     90 39 09",b);///99 /2c
+    WriteProcessMemory(hProcess,(void*)path,(void*)&b,len,NULL);
+    return 1;
 }
 
 
 int NoPotionDelay()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"89 90 70 04 00 00 8B 85 18 F1 FF FF",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"89 90 70 04 00 00 8B 85 18 F1 FF FF",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-0x12;
-        byte b[40];
-        int len=getHexCode("C7 80 6C 04 00 00 00 00 00 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-0x12;
+    byte b[40];
+    int len=getHexCode("C7 80 6C 04 00 00 00 00 00 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
 int KillAllScreen()
 {
-    if(reg)
-    {
-        void *addr=(void*)malloc(4);
-        SearchFunctionByName(L"Terraria.Player::ItemCheck",&addr,1);
-        void *dst=addr+0x1e008;
-        byte b[20];
-        int len=getHexCode("90 90 90 90 90 90 90 90",b);
-        WriteProcessMemory(hProcess,dst,b,len,NULL);
-    }
-    return 0;
+    void *addr=(void*)malloc(4);
+    SearchFunctionByName(L"Terraria.Player::ItemCheck",&addr,1);
+    void *dst=addr+0x1e008;
+    byte b[20];
+    int len=getHexCode("90 90 90 90 90 90 90 90",b);
+    WriteProcessMemory(hProcess,dst,b,len,NULL);
+    return 1;
 }
 
 
@@ -1710,20 +1577,16 @@ int KillAllScreen()
 
 int FastTileSpeed()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"8B 85 18 F1 FF FF D9 80 C4 03 00 00 D9 05",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"8B 85 18 F1 FF FF D9 80 C4 03 00 00 D9 05",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-0x6;
-        byte b[40];
-        int len=getHexCode("D9 98 C8 03 00 00 C7 80 C8 03 00 00 00 00 80 3E",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-0x6;
+    byte b[40];
+    int len=getHexCode("D9 98 C8 03 00 00 C7 80 C8 03 00 00 00 00 80 3E",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
@@ -1737,20 +1600,16 @@ int De_FastTileSpeed()
 
 int RulerEffect()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"88 96 f7 05 00 00 88 96 f8 05 00 00",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"88 96 f7 05 00 00 88 96 f8 05 00 00",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-6;
-        byte b[40];
-        int len=getHexCode("88 96 F6 05 00 00 C7 86 F6 05 00 00 01 00 00 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-6;
+    byte b[40];
+    int len=getHexCode("88 96 F6 05 00 00 C7 86 F6 05 00 00 01 00 00 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
@@ -1763,20 +1622,16 @@ int De_RulerEffect()
 
 int MachinicalRulerEffect()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"88 96 F7 05 00 00 88 96 F8 05 00 00",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"88 96 F7 05 00 00 88 96 F8 05 00 00",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-6;
-        byte b[40];
-        int len=getHexCode("88 96 F6 05 00 00 C7 86 F6 05 00 00 01 00 00 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-6;
+    byte b[40];
+    int len=getHexCode("88 96 F6 05 00 00 C7 86 F6 05 00 00 01 00 00 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
@@ -1789,20 +1644,16 @@ int De_MachinicalRulerEffect()
 
 int InfernoEffect()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"88 96 FF 04 00 00 88 96 00 05 00 00",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"88 96 FF 04 00 00 88 96 00 05 00 00",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-6;
-        byte b[40];
-        int len=getHexCode("88 96 03 05 00 00 C7 86 03 05 00 00 01 00 00 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-6;
+    byte b[40];
+    int len=getHexCode("88 96 03 05 00 00 C7 86 03 05 00 00 01 00 00 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
@@ -1815,20 +1666,16 @@ int De_InfernoEffect()
 
 int ShadowDodge()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"88 96 33 05 00 00 88 96 A9 05 00 00",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"88 96 33 05 00 00 88 96 A9 05 00 00",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-6;
-        byte b[40];
-        int len=getHexCode("88 96 32 05 00 00 C7 86 32 05 00 00 01 00 00 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-6;
+    byte b[40];
+    int len=getHexCode("88 96 32 05 00 00 C7 86 32 05 00 00 01 00 00 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 
@@ -1841,20 +1688,16 @@ int De_ShadowDodge()
 
 int ShowCircuit()
 {
-    if(reg)
+    int path1=aobscan(hProcess,"88 96 1D 06 00 00 88 96 1E 06 00 00",0);
+    if(path1<=0)
     {
-        int path1=aobscan(hProcess,"88 96 1D 06 00 00 88 96 1E 06 00 00",0);
-        if(path1<=0)
-        {
-            return 0;
-        }
-        int path=path1-6;
-        byte b[40];
-        int len=getHexCode("88 96 2A 06 00 00 C7 86 2A 06 00 00 01 00 00 00",b);
-        inline_hook(hProcess,(void*)path,6,b,len);
-        return 1;
+        return 0;
     }
-    return 0;
+    int path=path1-6;
+    byte b[40];
+    int len=getHexCode("88 96 2A 06 00 00 C7 86 2A 06 00 00 01 00 00 00",b);
+    inline_hook(hProcess,(void*)path,6,b,len);
+    return 1;
 }
 
 int De_ShowCircuit()
@@ -1866,12 +1709,8 @@ int De_ShowCircuit()
 
 int FishOnlyCrates()
 {
-    if(reg)
-    {
-        search_replace("0f 8d 4F 01 00 00 8b 45","90 90 90 90 90 90");
-        return 1;
-    }
-    return 0;
+    search_replace("0f 8d 4F 01 00 00 8b 45","90 90 90 90 90 90");
+    return 1;
 }
 
 int De_FishOnlyCrates()
@@ -1944,16 +1783,12 @@ int De_AttackThroughWalls()
 
 int De_ProjectileIgnoreTiles()
 {
-    if(reg)
-    {
-        void* Terraria_Projectile_HandleMovement;
-        SearchFunctionByName(L"Terraria.Projectile::HandleMovement",&Terraria_Projectile_HandleMovement,1);
-        int aAddr=(int)ceil((int)Terraria_Projectile_HandleMovement/0x10000)*0x10000;
-        byte v=0x84;
-        WriteProcessMemory(hProcess,(void*)aobscan(hProcess,"8d 7d d8",aAddr)-0x5,&v,1,NULL);
-        return 1;
-    }
-    return 0;
+    void* Terraria_Projectile_HandleMovement;
+    SearchFunctionByName(L"Terraria.Projectile::HandleMovement",&Terraria_Projectile_HandleMovement,1);
+    int aAddr=(int)ceil((int)Terraria_Projectile_HandleMovement/0x10000)*0x10000;
+    byte v=0x84;
+    WriteProcessMemory(hProcess,(void*)aobscan(hProcess,"8d 7d d8",aAddr)-0x5,&v,1,NULL);
+    return 1;
 }
 
 int De_JumpAsFeather()
@@ -2028,15 +1863,12 @@ int De_NoPotionDelay()
 
 int De_KillAllScreen()
 {
-    if(reg)
-    {
-        void *addr=(void*)malloc(4);
-        SearchFunctionByName(L"Terraria.Player::ItemCheck",&addr,1);
-        void *dst=addr+0x1e008;
-        byte b[20];
-        int len=getHexCode("85 C0 0F 84 C5 14 00 00",b);
-        WriteProcessMemory(hProcess,dst,b,len,NULL);
-    }
+    void *addr=(void*)malloc(4);
+    SearchFunctionByName(L"Terraria.Player::ItemCheck",&addr,1);
+    void *dst=addr+0x1e008;
+    byte b[20];
+    int len=getHexCode("85 C0 0F 84 C5 14 00 00",b);
+    WriteProcessMemory(hProcess,dst,b,len,NULL);
     return 1;
 }
 
@@ -2052,8 +1884,7 @@ int getHealth()
 
 void setHealth(int health)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&health,4,1,0x340);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&health,4,1,0x340);
 }
 
 
@@ -2078,8 +1909,7 @@ int getMana()
 
 void setMana(int mana)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&mana,4,1,0x34c);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&mana,4,1,0x34c);
 }
 
 int getMaxMana()
@@ -2091,10 +1921,7 @@ int getMaxMana()
 
 void setMaxMana(int mana)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&mana,4,1,0x348);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&mana,4,1,0x348);
 }
 
 
@@ -2108,8 +1935,7 @@ float getX()
 
 void setX(float X)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&X,4,1,0x20);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&X,4,1,0x20);
 }
 
 float getY()
@@ -2121,27 +1947,23 @@ float getY()
 
 void setY(float Y)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&Y,4,1,0x24);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&Y,4,1,0x24);
 }
 
 
 
 int HighLight()
 {
-    if(reg)
+    int path=aobscan(hProcess,"d9 46 08 d9 45 c4 df f1 dd d8 7a 0a 73 08 d9 46 08 d9 5d c4 eb 2c d9 45 c4 dd 05",0);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"d9 46 08 d9 45 c4 df f1 dd d8 7a 0a 73 08 d9 46 08 d9 5d c4 eb 2c d9 45 c4 dd 05",0);
-        if(path<=0)
-        {
-            return 0;
-        }
-        byte ASM_CODE[512];
-        int len=getHexCode("C7 46 08 00 00 80 3F C7 46 10 00 00 80 3F C7 46 18 00 00 80 3F D9 46 08 D9 45 C4",ASM_CODE);
-
-        inline_hook(hProcess,(void*)path,6,ASM_CODE,len);
-        return 1;
+        return 0;
     }
+    byte ASM_CODE[512];
+    int len=getHexCode("C7 46 08 00 00 80 3F C7 46 10 00 00 80 3F C7 46 18 00 00 80 3F D9 46 08 D9 45 C4",ASM_CODE);
+
+    inline_hook(hProcess,(void*)path,6,ASM_CODE,len);
+    return 1;
     return 0;
 }
 
@@ -2154,20 +1976,17 @@ int De_HighLight()
 
 int IgnoreRange()
 {
-    if(reg)
+    int path=aobscan(hProcess,"89 44 8A 08 41 3B",0);
+    if(path<=0)
     {
-        int path=aobscan(hProcess,"89 44 8A 08 41 3B",0);
-        if(path<=0)
-        {
-            return 0;
-        }
-        int t1=path+0x1A;
-        int t2=path+0x24;
-        int v=999;
-        WriteProcessMemory(hProcess,(void*)t1,(void*)&v,4,NULL);
-        WriteProcessMemory(hProcess,(void*)t2,(void*)&v,4,NULL);
-        return 1;
+        return 0;
     }
+    int t1=path+0x1A;
+    int t2=path+0x24;
+    int v=999;
+    WriteProcessMemory(hProcess,(void*)t1,(void*)&v,4,NULL);
+    WriteProcessMemory(hProcess,(void*)t2,(void*)&v,4,NULL);
+    return 1;
     return 0;
 }
 
@@ -2218,8 +2037,7 @@ int getBuffType(int id)
 
 void setBuffType(int id,int type)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&type,4,2,0xac,0x08+id*0x04);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&type,4,2,0xac,0x08+id*0x04);
 }
 
 int getBuffTime(int id)
@@ -2231,8 +2049,7 @@ int getBuffTime(int id)
 
 void setBuffTime(int id,int time)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&time,4,2,0xb0,0x08+id*0x04);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&time,4,2,0xb0,0x08+id*0x04);
 }
 
 
@@ -2240,7 +2057,8 @@ void* InitEax(int pid)
 {
     void* r;
     int f=aobscan(hProcess,"8B 44 90 08 80 B8 E2 05 00 00 00 74 08",0);//Terraria.Lighting::LightTiles+13B - 8B 44 90 08
-    if(f<=0)return 0;
+    if(f<=0)
+        return 0;
     f-=0x13;
     int q;
     ReadProcessMemory(hProcess,(void*)f,&q,4,NULL);
@@ -2299,50 +2117,36 @@ int getPlayerMaxHealth(int id)
 
 int getPlayerItemBase(int id)
 {
-    if(reg)
-    {
-        int v;
-        _Read_FromBase(playerarrbase,&v,4,2,0x08+id*0x04,0xbc);
-        return v;
-    }
-    return 0;
+    int v;
+    _Read_FromBase(playerarrbase,&v,4,2,0x08+id*0x04,0xbc);
+    return v;
 }
 
 void setPlayerItemBase(int id,int ibase)
 {
-    if(reg)
-    {
-        _Hack(playerarrbase,&ibase,4,2,0x08+id*0x04,0xbc);
-    }
+    _Hack(playerarrbase,&ibase,4,2,0x08+id*0x04,0xbc);
 }
 
 int getMyPlayer()
 {
-    if(reg)
-    {
-        void *addr;
-        SearchFunctionByName(L"Terraria.Main::ReverseGravitySupport",&addr,1);
-        addr+=0xb;
-        void *addr1;
-        ReadProcessMemory(hProcess,addr,&addr1,4,NULL);
-        int target;
-        ReadProcessMemory(hProcess,addr1,&target,4,NULL);
-        return target;
-    }
-    return 0;
+    void *addr;
+    SearchFunctionByName(L"Terraria.Main::ReverseGravitySupport",&addr,1);
+    addr+=0xb;
+    void *addr1;
+    ReadProcessMemory(hProcess,addr,&addr1,4,NULL);
+    int target;
+    ReadProcessMemory(hProcess,addr1,&target,4,NULL);
+    return target;
 }
 
 void setMyPlayer(int index)
 {
-    if(reg)
-    {
-        void *addr;
-        SearchFunctionByName(L"Terraria.Main::ReverseGravitySupport",&addr,1);
-        addr+=0xb;
-        void *addr1;
-        ReadProcessMemory(hProcess,addr,&addr1,4,NULL);
-        WriteProcessMemory(hProcess,addr1,&index,4,NULL);
-    }
+    void *addr;
+    SearchFunctionByName(L"Terraria.Main::ReverseGravitySupport",&addr,1);
+    addr+=0xb;
+    void *addr1;
+    ReadProcessMemory(hProcess,addr,&addr1,4,NULL);
+    WriteProcessMemory(hProcess,addr1,&index,4,NULL);
 }
 
 void* getPlayerBaseAddress(int player)
@@ -2365,11 +2169,8 @@ int getItemType(int slot)
 
 void setItemType(int slot,int id)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&id,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.type);
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&id,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.type+0xA0);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&id,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.type);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&id,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.type+0xA0);
 }
 
 
@@ -2395,10 +2196,7 @@ int getItemFishingPole(int slot)
 
 void setItemFishingPole(int slot,int pole)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&pole,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.fishingPole);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&pole,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.fishingPole);
 }
 
 float getItemKnockBack(int slot)
@@ -2410,8 +2208,7 @@ float getItemKnockBack(int slot)
 
 void setItemKnockBack(int slot,float v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.knockBack);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.knockBack);
 }
 
 int getItemShoot(int slot)
@@ -2423,8 +2220,7 @@ int getItemShoot(int slot)
 
 void setItemShoot(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.shoot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.shoot);
 }
 
 float getItemShootSpeed(int slot)
@@ -2436,8 +2232,7 @@ float getItemShootSpeed(int slot)
 
 void setItemShootSpeed(int slot,float v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.shootSpeed);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.shootSpeed);
 }
 
 int getItemCrit(int slot)
@@ -2449,8 +2244,7 @@ int getItemCrit(int slot)
 
 void setItemCrit(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.crit);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.crit);
 }
 
 int getItemDamage(int slot)
@@ -2462,8 +2256,7 @@ int getItemDamage(int slot)
 
 void setItemDamage(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.damage);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.damage);
 }
 
 int getItemHealLife(int slot)
@@ -2475,8 +2268,7 @@ int getItemHealLife(int slot)
 
 void setItemHealLife(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.healLife);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.healLife);
 }
 
 
@@ -2489,8 +2281,7 @@ int getItemHealMana(int slot)
 
 void setItemHealMana(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.healMana);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.healMana);
 }
 
 
@@ -2503,8 +2294,7 @@ int getItemStack(int slot)
 
 void setItemStack(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.stack);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.stack);
 }
 
 
@@ -2517,8 +2307,7 @@ int getItemUseTime(int slot)
 
 void setItemUseTime(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.useTime);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.useTime);
 }
 
 
@@ -2531,8 +2320,7 @@ int getItemPick(int slot)
 
 void setItemPick(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.pick);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.pick);
 }
 
 
@@ -2545,8 +2333,7 @@ int getItemAxe(int slot)
 
 void setItemAxe(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.axe);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.axe);
 }
 
 
@@ -2559,8 +2346,7 @@ int getItemHammer(int slot)
 
 void setItemHammer(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.hammer);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.hammer);
 }
 
 
@@ -2573,8 +2359,7 @@ int getItemTileBoost(int slot)
 
 void setItemTileBoost(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.tileBoost);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.tileBoost);
 }
 
 
@@ -2587,8 +2372,7 @@ byte getItemAutoReuse(int slot)
 
 void setItemAutoReuse(int slot,byte v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.autoReuse);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.autoReuse);
 }
 
 
@@ -2601,8 +2385,7 @@ int getItemUseAnimation(int slot)
 
 void setItemUseAnimation(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.useAnimation);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.useAnimation);
 }
 
 
@@ -2615,8 +2398,7 @@ int getItemBuffType(int slot)
 
 void setItemBuffType(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.buffType);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.buffType);
 }
 
 
@@ -2629,8 +2411,7 @@ int getItemBuffTime(int slot)
 
 void setItemBuffTime(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.buffTime);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.buffTime);
 }
 
 
@@ -2644,8 +2425,7 @@ byte getItemPrefix(int slot)
 void setItemPrefix(int slot,byte v)
 {
     byte b=v;
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&b,1,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.prefix);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&b,1,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.prefix);
 }
 
 
@@ -2658,8 +2438,7 @@ float getItemScale(int slot)
 
 void setItemScale(int slot,float v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.scale);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.scale);
 }
 
 
@@ -2672,8 +2451,7 @@ int getItemDefense(int slot)
 
 void setItemDefense(int slot,int v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.defense);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.defense);
 }
 
 
@@ -2687,8 +2465,7 @@ byte getItemAccessory(int slot)
 
 void setItemAccessory(int slot,byte v)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.accessory);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x8+slot*0x4,OFFSET_ITEM.accessory);
 }
 
 int getItemCreateTile(int slot)
@@ -2700,8 +2477,7 @@ int getItemCreateTile(int slot)
 
 void setItemCreateTile(int slot,int tileID)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&tileID,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.createTile);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&tileID,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.createTile);
 }
 
 int getItemCreateWall(int slot)
@@ -2713,8 +2489,7 @@ int getItemCreateWall(int slot)
 
 void setItemCreateWall(int slot,int wallID)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&wallID,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.createWall);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&wallID,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.createWall);
 }
 
 int getItemMana(int slot)
@@ -2726,8 +2501,7 @@ int getItemMana(int slot)
 
 void setItemMana(int slot,int mana)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&mana,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mana);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&mana,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mana);
 }
 
 int getItemMaxStack(int slot)
@@ -2739,8 +2513,7 @@ int getItemMaxStack(int slot)
 
 void setItemMaxStack(int slot,int max)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&max,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.maxStack);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&max,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.maxStack);
 }
 
 int getItemUseStyle(int slot)
@@ -2752,8 +2525,7 @@ int getItemUseStyle(int slot)
 
 void setItemUseStyle(int slot,int style)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&style,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useStyle);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&style,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useStyle);
 }
 
 int getItemPlaceStyle(int slot)
@@ -2765,8 +2537,7 @@ int getItemPlaceStyle(int slot)
 
 void setItemPlaceStyle(int slot,int style)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&style,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.placeStyle);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&style,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.placeStyle);
 }
 
 int getItemRare(int slot)
@@ -2778,8 +2549,7 @@ int getItemRare(int slot)
 
 void setItemRare(int slot,int rare)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&rare,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.rare);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&rare,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.rare);
 }
 
 int getItemReuseDelay(int slot)
@@ -2791,8 +2561,7 @@ int getItemReuseDelay(int slot)
 
 void setItemReuseDelay(int slot,int delay)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&delay,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.reuseDelay);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&delay,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.reuseDelay);
 }
 
 int getItemTileWand(int slot)
@@ -2804,8 +2573,7 @@ int getItemTileWand(int slot)
 
 void setItemTileWand(int slot,int wand)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&wand,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.tileWand);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&wand,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.tileWand);
 }
 
 int getItemUseAmmo(int slot)
@@ -2817,8 +2585,7 @@ int getItemUseAmmo(int slot)
 
 void setItemUseAmmo(int slot,int ammo)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&ammo,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useAmmo);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&ammo,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useAmmo);
 }
 
 int getItemValue(int slot)
@@ -2830,8 +2597,7 @@ int getItemValue(int slot)
 
 void setItemValue(int slot,int val)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.value);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.value);
 }
 
 
@@ -2847,8 +2613,7 @@ short getItemGlowMask(int slot)
 
 void setItemGlowMask(int slot,short glow)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&glow,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.glowMask);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&glow,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.glowMask);
 }
 
 short getItemMakeNPC(int slot)
@@ -2860,8 +2625,7 @@ short getItemMakeNPC(int slot)
 
 void setItemMakeNPC(int slot,short npc)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&npc,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.makeNPC);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&npc,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.makeNPC);
 }
 
 
@@ -2876,8 +2640,7 @@ int getItemAmmo(int slot)
 
 void setItemAmmo(int slot,int tileID)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&tileID,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.ammo);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&tileID,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.ammo);
 }
 
 byte getItemHeadSlot(int slot)
@@ -2889,8 +2652,7 @@ byte getItemHeadSlot(int slot)
 
 void setItemHeadSlot(int slot,byte headSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&headSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.headSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&headSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.headSlot);
 }
 
 byte getItemBodySlot(int slot)
@@ -2902,8 +2664,7 @@ byte getItemBodySlot(int slot)
 
 void setItemBodySlot(int slot,byte bodySlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&bodySlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.bodySlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&bodySlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.bodySlot);
 }
 
 byte getItemLegSlot(int slot)
@@ -2915,8 +2676,7 @@ byte getItemLegSlot(int slot)
 
 void setItemLegSlot(int slot,byte legSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&legSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.legSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&legSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.legSlot);
 }
 
 byte getItemBalloonSlot(int slot)
@@ -2928,8 +2688,7 @@ byte getItemBalloonSlot(int slot)
 
 void setItemBalloonSlot(int slot,byte ballSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&ballSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.balloonSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&ballSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.balloonSlot);
 }
 
 byte getItemFrontSlot(int slot)
@@ -2941,8 +2700,7 @@ byte getItemFrontSlot(int slot)
 
 void setItemFrontSlot(int slot,byte frontSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&frontSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.frontSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&frontSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.frontSlot);
 }
 
 byte getItemWaistSlot(int slot)
@@ -2954,8 +2712,7 @@ byte getItemWaistSlot(int slot)
 
 void setItemWaistSlot(int slot,byte waistSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&waistSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.waistSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&waistSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.waistSlot);
 }
 
 byte getItemWingSlot(int slot)
@@ -2967,8 +2724,7 @@ byte getItemWingSlot(int slot)
 
 void setItemWingSlot(int slot,byte wingSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&wingSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.wingSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&wingSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.wingSlot);
 }
 
 byte getItemBackSlot(int slot)
@@ -2980,8 +2736,7 @@ byte getItemBackSlot(int slot)
 
 void setItemBackSlot(int slot,byte backSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&backSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.backSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&backSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.backSlot);
 }
 
 byte getItemFaceSlot(int slot)
@@ -2993,8 +2748,7 @@ byte getItemFaceSlot(int slot)
 
 void setItemFaceSlot(int slot,byte faceSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&faceSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.faceSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&faceSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.faceSlot);
 }
 
 byte getItemHandOnSlot(int slot)
@@ -3006,8 +2760,7 @@ byte getItemHandOnSlot(int slot)
 
 void setItemHandOnSlot(int slot,byte handOnSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&handOnSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.handOnSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&handOnSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.handOnSlot);
 }
 
 byte getItemHandOffSlot(int slot)
@@ -3019,8 +2772,7 @@ byte getItemHandOffSlot(int slot)
 
 void setItemHandOffSlot(int slot,byte handOffSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&handOffSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.handOffSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&handOffSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.handOffSlot);
 }
 
 byte getItemNeckSlot(int slot)
@@ -3032,24 +2784,18 @@ byte getItemNeckSlot(int slot)
 
 void setItemNeckSlot(int slot,byte neckSlot)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&neckSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.neckSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&neckSlot,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.neckSlot);
 }
 
 byte getItemDye(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.dye);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.dye);
+    return v;
 }
 void setItemDye(int slot,byte dye)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&dye,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.dye);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&dye,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.dye);
 }
 
 byte getItemShieldSlot(int slot)
@@ -3061,8 +2807,7 @@ byte getItemShieldSlot(int slot)
 
 void setItemShieldSlot(int slot,byte shield)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&shield,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shieldSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&shield,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shieldSlot);
 }
 
 byte getItemShoeSlot(int slot)
@@ -3074,8 +2819,7 @@ byte getItemShoeSlot(int slot)
 
 void setItemShoeSlot(int slot,byte shoe)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&shoe,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shoeSlot);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&shoe,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shoeSlot);
 }
 
 byte getItemPaint(int slot)
@@ -3087,8 +2831,7 @@ byte getItemPaint(int slot)
 
 void setItemPaint(int slot,byte paint)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&paint,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.paint);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&paint,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.paint);
 }
 
 byte getItemCartTrack(int slot)
@@ -3100,8 +2843,7 @@ byte getItemCartTrack(int slot)
 
 void setItemCartTrack(int slot,byte cart)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&cart,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.cartTrack);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&cart,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.cartTrack);
 }
 
 byte getItemConsumable(int slot)
@@ -3113,8 +2855,7 @@ byte getItemConsumable(int slot)
 
 void setItemConsumable(int slot,byte cons)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&cons,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.consumable);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&cons,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.consumable);
 }
 
 byte getItemNoUseGraphic(int slot)
@@ -3126,8 +2867,7 @@ byte getItemNoUseGraphic(int slot)
 
 void setItemNoUseGraphic(int slot,byte no)
 {
-    if(reg)
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&no,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noUseGraphic);
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&no,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noUseGraphic);
 }
 
 
@@ -3158,707 +2898,455 @@ int getPlayerItemNum(int id,int slot)
 
 int getDropedItemID(int index)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,OFFSET_ITEM.type);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,OFFSET_ITEM.type);
+    return val;
 }
 
 
 void setDropedItemID(int index,int id)
 {
-    if(reg)
-    {
-        _Hack(dropeditembase,&id,4,2,0x08+index*0x04,OFFSET_ITEM.type);
-        _Hack(dropeditembase,&id,4,2,0x08+index*0x04,OFFSET_ITEM.type+0xA0);
-    }
+    _Hack(dropeditembase,&id,4,2,0x08+index*0x04,OFFSET_ITEM.type);
+    _Hack(dropeditembase,&id,4,2,0x08+index*0x04,OFFSET_ITEM.type+0xA0);
 }
 
 
 float getDropedItemX(int index)
 {
-    if(reg)
-    {
-        float val;
-        _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,0x20);
-        return val;
-    }
-    return 0;
+    float val;
+    _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,0x20);
+    return val;
 }
 
 
 void setDropedItemX(int index,float X)
 {
-    if(reg)
-    {
-        _Hack(dropeditembase,&X,4,2,0x08+index*0x04,0x20);
-    }
+    _Hack(dropeditembase,&X,4,2,0x08+index*0x04,0x20);
 }
 
 float getDropedItemY(int index)
 {
-    if(reg)
-    {
-        float val;
-        _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,0x24);
-        return val;
-    }
-    return 0;
+    float val;
+    _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,0x24);
+    return val;
 }
 
 
 void setDropedItemY(int index,float Y)
 {
-    if(reg)
-    {
-        _Hack(dropeditembase,&Y,4,2,0x08+index*0x04,0x24);
-    }
+    _Hack(dropeditembase,&Y,4,2,0x08+index*0x04,0x24);
 }
 
 
 int getDropedItemCount(int index)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,OFFSET_ITEM.stack);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(dropeditembase,&val,4,2,0x08+index*0x04,OFFSET_ITEM.stack);
+    return val;
 }
 
 
 void setDropedItemCount(int index,int count)
 {
-    if(reg)
-    {
-        _Hack(dropeditembase,&count,4,2,0x08+index*0x04,OFFSET_ITEM.stack);
-    }
+    _Hack(dropeditembase,&count,4,2,0x08+index*0x04,OFFSET_ITEM.stack);
 }
 
 
 int getItemLifeRegen(int slot)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.lifeRegen);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.lifeRegen);
+    return val;
 }
 
 
 void setItemLifeRegen(int slot,int regen)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&regen,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.lifeRegen);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&regen,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.lifeRegen);
 }
 
 
 int getItemHoldStyle(int slot)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.holdStyle);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.holdStyle);
+    return val;
 }
 
 
 void setItemHoldStyle(int slot,int style)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&style,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.holdStyle);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&style,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.holdStyle);
 }
 
 byte getItemMagic(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.magic);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.magic);
+    return v;
 }
 
 void setItemMagic(int slot,byte magic)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&magic,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.magic);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&magic,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.magic);
 }
 
 byte getItemMech(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mech);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mech);
+    return v;
 }
 
 void setItemMech(int slot,byte mech)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&mech,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mech);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&mech,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mech);
 }
 
 byte getItemMelee(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.melee);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.melee);
+    return v;
 }
 
 void setItemMelee(int slot,byte melee)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&melee,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.melee);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&melee,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.melee);
 }
 
 byte getItemNoMelee(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noMelee);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noMelee);
+    return v;
 }
 
 void setItemNoMelee(int slot,byte melee)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&melee,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noMelee);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&melee,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noMelee);
 }
 
 byte getItemRanged(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.ranged);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.ranged);
+    return v;
 }
 
 void setItemRanged(int slot,byte melee)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&melee,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.ranged);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&melee,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.ranged);
 }
 
 byte getItemMaterial(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.material);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.material);
+    return v;
 }
 
 void setItemMaterial(int slot,byte mat)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&mat,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.material);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&mat,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.material);
 }
 
 byte getItemSentry(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.sentry);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.sentry);
+    return v;
 }
 
 void setItemSentry(int slot,byte mat)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&mat,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.sentry);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&mat,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.sentry);
 }
 
 int getItemMountType(int slot)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mountType);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mountType);
+    return val;
 }
 
 
 void setItemMountType(int slot,int type)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&type,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mountType);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&type,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.mountType);
 }
 
 short getItemHairDye(int slot)
 {
-    if(reg)
-    {
-        short val;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.hairDye);
-        return val;
-    }
-    return 0;
+    short val;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.hairDye);
+    return val;
 }
 
 
 void setItemHairDye(int slot,short dye)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&dye,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.hairDye);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&dye,2,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.hairDye);
 }
 
 byte getItemQuestItem(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.questItem);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.questItem);
+    return v;
 }
 
 void setItemQuestItem(int slot,byte quest)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&quest,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.questItem);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&quest,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.questItem);
 }
 
 byte getItemThrown(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.thrown);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.thrown);
+    return v;
 }
 
 void setItemThrown(int slot,byte thrown)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&thrown,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.thrown);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&thrown,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.thrown);
 }
 
 byte getItemInstanced(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.instanced);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.instanced);
+    return v;
 }
 
 void setItemInstanced(int slot,byte ins)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&ins,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.instanced);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&ins,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.instanced);
 }
 
 byte getItemExpertOnly(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expertOnly);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expertOnly);
+    return v;
 }
 
 void setItemExpertOnly(int slot,byte expert)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&expert,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expertOnly);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&expert,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expertOnly);
 }
 
 byte getItemExpert(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expert);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expert);
+    return v;
 }
 
 void setItemExpert(int slot,byte expert)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&expert,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expert);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&expert,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.expert);
 }
 
 byte getItemSummon(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.summon);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.summon);
+    return v;
 }
 
 void setItemSummon(int slot,byte summon)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&summon,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.summon);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&summon,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.summon);
 }
 
 byte getItemNoWet(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noWet);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noWet);
+    return v;
 }
 
 void setItemNoWet(int slot,byte noWet)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&noWet,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noWet);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&noWet,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.noWet);
 }
 
 byte getItemVanity(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.vanity);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.vanity);
+    return v;
 }
 
 void setItemVanity(int slot,byte vanity)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&vanity,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.vanity);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&vanity,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.vanity);
 }
 
 byte getItemChannel(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.channel);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.channel);
+    return v;
 }
 
 void setItemChannel(int slot,byte channel)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&channel,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.channel);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&channel,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.channel);
 }
 
 int getItemManaIncrease(int slot)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.manaIncrease);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.manaIncrease);
+    return val;
 }
 
 
 void setItemManaIncrease(int slot,int inc)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&inc,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.manaIncrease);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&inc,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.manaIncrease);
 }
 
 int getItemRelease(int slot)
 {
-    if(reg)
-    {
-        int val;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.release);
-        return val;
-    }
-    return 0;
+    int val;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&val,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.release);
+    return val;
 }
 
 
 void setItemRelease(int slot,int rel)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&rel,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.release);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&rel,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.release);
 }
 
 
 byte getItemActive(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.active);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.active);
+    return v;
 }
 
 void setItemActive(int slot,byte active)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&active,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.active);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&active,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.active);
 }
 
 byte getItemPotion(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.potion);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.potion);
+    return v;
 }
 
 void setItemPotion(int slot,byte potion)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&potion,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.potion);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&potion,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.potion);
 }
 
 byte getItemUseTurn(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useTurn);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useTurn);
+    return v;
 }
 
 void setItemUseTurn(int slot,byte useTurn)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&useTurn,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useTurn);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&useTurn,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.useTurn);
 }
 
 byte getItemBuy(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.buy);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.buy);
+    return v;
 }
 
 void setItemBuy(int slot,byte buy)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&buy,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.buy);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&buy,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.buy);
 }
 
 byte getItemUniqueStack(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.uniqueStack);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.uniqueStack);
+    return v;
 }
 
 void setItemUniqueStack(int slot,byte uni)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&uni,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.uniqueStack);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&uni,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.uniqueStack);
 }
 
 byte getItemFavorited(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.favorited);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.favorited);
+    return v;
 }
 
 void setItemFavorited(int slot,byte fav)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&fav,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.favorited);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&fav,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.favorited);
 }
 
 byte getItemFlame(int slot)
 {
-    if(reg)
-    {
-        byte v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.flame);
-        return v;
-    }
-    return 0;
+    byte v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.flame);
+    return v;
 }
 
 void setItemFlame(int slot,byte flame)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&flame,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.flame);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&flame,1,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.flame);
 }
 
 int getItemAlpha(int slot)
 {
-    if(reg)
-    {
-        int v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.alpha);
-        return v;
-    }
-    return 0;
+    int v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.alpha);
+    return v;
 }
 
 void setItemAlpha(int slot,int alpha)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&alpha,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.alpha);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&alpha,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.alpha);
 }
 
 int getItemShopSpecialCurrency(int slot)
 {
-    if(reg)
-    {
-        int v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopSpecialCurrency);
-        return v;
-    }
-    return 0;
+    int v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopSpecialCurrency);
+    return v;
 }
 
 void setItemShopSpecialCurrency(int slot,int sh)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&sh,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopSpecialCurrency);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&sh,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopSpecialCurrency);
 }
 
 int getItemShopCustomPrice(int slot)
 {
-    if(reg)
-    {
-        int v;
-        _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopCustomPrice);
-        return v;
-    }
-    return 0;
+    int v;
+    _Read_FromBase(getPlayerBaseAddress(getMyPlayer()),&v,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopCustomPrice);
+    return v;
 }
 
 void setItemShopCustomPrice(int slot,int sh)
 {
-    if(reg)
-    {
-        _Hack(getPlayerBaseAddress(getMyPlayer()),&sh,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopCustomPrice);
-    }
+    _Hack(getPlayerBaseAddress(getMyPlayer()),&sh,4,3,itemArrOff,0x08+slot*0x04,OFFSET_ITEM.shopCustomPrice);
 }
 
 void FreeMemory(void *v)
 {
-	free(v);
+    free(v);
 }
 
 int getMaxTilesX()
@@ -3897,29 +3385,27 @@ void* getMain_Map()
 
 void UpdateLighting(int x,int y,byte light)
 {
-    if(reg)
-    {
-        void* addr=getMain_Map();
-        byte b[500],raw_code[7];
-        ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        ///mov flag,0
-        ///push ecx
-        ///push edx
-        ///push eax
-        ///push ebx
-        ///mov ecx,Map
-        ///mov edx,X
-        ///push Y
-        ///push light
-        ///call Terraria.Map.WorldMap::UpdateLighting
-        ///pop ebx
-        ///pop eax
-        ///pop edx
-        ///pop ecx
-        ///xxxx
-        ///mov flag,1
-        ///jmp back
-        int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
+    void* addr=getMain_Map();
+    byte b[500],raw_code[7];
+    ReadProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    ///mov flag,0
+    ///push ecx
+    ///push edx
+    ///push eax
+    ///push ebx
+    ///mov ecx,Map
+    ///mov edx,X
+    ///push Y
+    ///push light
+    ///call Terraria.Map.WorldMap::UpdateLighting
+    ///pop ebx
+    ///pop eax
+    ///pop edx
+    ///pop ecx
+    ///xxxx
+    ///mov flag,1
+    ///jmp back
+    int blen=getHexCode("C7 05 00 00 00 00 00 00 00 00\
                         51\
                         52\
                         50\
@@ -3936,43 +3422,42 @@ void UpdateLighting(int x,int y,byte light)
                         00 00 00000000 00\
                         C7 05 00 00 00 00 01 00 00 00\
                         E9 00 00 00 00",
-                            b);
-        void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
-        void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
-        int *d_flag1=(int*)&b[2];
-        int *d_Map=(int*)&b[16];
-        int *d_X=(int*)&b[21];
-        int *d_Y=(int*)&b[26];
-        byte *d_light=(byte*)&b[31];
-        int *d_jmpUpdateLighting=(int*)&b[33];
-        int *d_code=(int*)&b[41];
-        int *d_flag2=(int*)&b[50];
-        int *d_jmpRet=(int*)&b[blen-4];
-        *d_flag1=(int)flagAddr;
-        *d_Map=(int)addr;
-        *d_X=x;
-        *d_Y=y;
-        *d_light=light;
-        *d_jmpUpdateLighting=Terraria_Map_WorldMap_UpdateLighting-(hookAddr+33)-4;
-        memcpy(d_code,raw_code,7);
-        *d_flag2=(int)flagAddr;
-        *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
-        byte jmpCode[5];
-        jmpCode[0]=0xe9;
-        *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
-        WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
-        while(1)
-        {
-            int flag=0;
-            ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
-            if(flag==1)
-                break;
-        }
-        WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
-        VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
-        VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
+                        b);
+    void* hookAddr=VirtualAllocEx(hProcess, NULL, blen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+    void* flagAddr=VirtualAllocEx(hProcess, NULL, 4, MEM_COMMIT, PAGE_READWRITE);
+    int *d_flag1=(int*)&b[2];
+    int *d_Map=(int*)&b[16];
+    int *d_X=(int*)&b[21];
+    int *d_Y=(int*)&b[26];
+    byte *d_light=(byte*)&b[31];
+    int *d_jmpUpdateLighting=(int*)&b[33];
+    int *d_code=(int*)&b[41];
+    int *d_flag2=(int*)&b[50];
+    int *d_jmpRet=(int*)&b[blen-4];
+    *d_flag1=(int)flagAddr;
+    *d_Map=(int)addr;
+    *d_X=x;
+    *d_Y=y;
+    *d_light=light;
+    *d_jmpUpdateLighting=Terraria_Map_WorldMap_UpdateLighting-(hookAddr+33)-4;
+    memcpy(d_code,raw_code,7);
+    *d_flag2=(int)flagAddr;
+    *d_jmpRet=(Terraria_Main_Update+0x2B)-(hookAddr+blen-4)+3;
+    byte jmpCode[5];
+    jmpCode[0]=0xe9;
+    *((int*)&jmpCode[1])=hookAddr-(Terraria_Main_Update+0x2B)-5;
+    WriteProcessMemory(hProcess,hookAddr,b,blen,NULL);
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,jmpCode,5,NULL);
+    while(1)
+    {
+        int flag=0;
+        ReadProcessMemory(hProcess,flagAddr,&flag,4,NULL);
+        if(flag==1)
+            break;
     }
+    WriteProcessMemory(hProcess,Terraria_Main_Update+0x2B,raw_code,7,NULL);
+    VirtualFreeEx(hProcess,(void*)hookAddr,0,MEM_RELEASE);
+    VirtualFreeEx(hProcess,(void*)flagAddr,0,MEM_RELEASE);
 }
 
 void RefreshMap()
@@ -4000,15 +3485,11 @@ void setSelectedItem(int si)
 
 int BlockAttacking()
 {
-    if(reg)
-        return search_replace("80 7C 02 08 00 0F 84 DA 02 00 00 83 BD","80 7C 02 08 FF");
-    return 0;
+    return search_replace("80 7C 02 08 00 0F 84 DA 02 00 00 83 BD","80 7C 02 08 FF");
 }
 
 int De_BlockAttacking()
 {
-    if(reg)
-        return search_replace("80 7C 02 08 FF 0F 84 DA 02 00 00 83 BD","80 7C 02 08 00");
-    return 0;
+    return search_replace("80 7C 02 08 FF 0F 84 DA 02 00 00 83 BD","80 7C 02 08 00");
 }
 

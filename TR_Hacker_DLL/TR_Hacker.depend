@@ -57,3 +57,25 @@
 	<stdio.h>
 	<wchar.h>
 
+1531155708 source:d:\tr_hacker\tr_hacker_dll\hack.c
+	"Func.h"
+
+1513262011 d:\tr_hacker\tr_hacker_dll\func.h
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<tlhelp32.h>
+	<tchar.h>
+	<wchar.h>
+	<locale.h>
+	<time.h>
+	<math.h>
+	"cpuid.h"
+	"../MyCheatLibrary/CheatLibrary/CheatLibrary.h"
+
+1500022269 d:\tr_hacker\tr_hacker_dll\cpuid.h
+
+1498370813 d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.h
+	<stdio.h>
+	<wchar.h>
+
