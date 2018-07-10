@@ -6,7 +6,6 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Script file="lib_finder.script" />
 			<Target title="Debug">
 				<Option output="../Debug/TR_Hacker" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/Debug" />
@@ -20,7 +19,6 @@
 				</Compiler>
 				<Linker>
 					<Add library="../Debug/CheatLibrary.lib" />
-					<Add library="../TR_Hacker_DLL/libcpuid.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -35,7 +33,6 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="../Release/CheatLibrary.lib" />
-					<Add library="../TR_Hacker_DLL/libcpuid.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -44,8 +41,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Func.h" />
-		<Unit filename="cpuid.h" />
 		<Unit filename="hack.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="itemhack.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
