@@ -1,0 +1,36 @@
+﻿  CheatLibrary.cpp
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(103): warning C4312: “类型强制转换”: 从“int”转换到更大的“void *”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(111): warning C4244: “+=”: 从“SIZE_T”转换到“int”，可能丢失数据
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(119): warning C4312: “类型强制转换”: 从“int”转换到更大的“void *”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(123): warning C4312: “类型强制转换”: 从“int”转换到更大的“PVOID”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(126): warning C4244: “+=”: 从“SIZE_T”转换到“int”，可能丢失数据
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(143): warning C4311: “类型强制转换”: 从“void *”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(143): warning C4302: “类型强制转换”: 从“void *”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(143): warning C4311: “类型强制转换”: 从“PWSTR”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(143): warning C4302: “类型强制转换”: 从“PWSTR”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(147): warning C4311: “类型强制转换”: 从“PWSTR”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(147): warning C4302: “类型强制转换”: 从“PWSTR”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(147): warning C4311: “类型强制转换”: 从“void *”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(147): warning C4302: “类型强制转换”: 从“void *”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(171): warning C4311: “类型强制转换”: 从“void *”到“int”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(171): warning C4302: “类型强制转换”: 从“void *”到“int”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(171): warning C4312: “类型强制转换”: 从“int”转换到更大的“void *”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(175): warning C4311: “类型强制转换”: 从“void *”到“int”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(175): warning C4302: “类型强制转换”: 从“void *”到“int”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(175): warning C4312: “类型强制转换”: 从“int”转换到更大的“void *”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(196): warning C4311: “类型强制转换”: 从“void *”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(196): warning C4302: “类型强制转换”: 从“void *”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(196): warning C4312: “类型强制转换”: 从“UINT”转换到更大的“void *”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(202): warning C4311: “类型强制转换”: 从“void *”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(202): warning C4302: “类型强制转换”: 从“void *”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(202): warning C4312: “类型强制转换”: 从“UINT”转换到更大的“void *”
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(214): warning C4311: “类型强制转换”: 从“void *”到“UINT”的指针截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(214): warning C4302: “类型强制转换”: 从“void *”到“UINT”截断
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(214): warning C4312: “类型强制转换”: 从“UINT”转换到更大的“void *”
+  DotNetDataGetter.cpp
+  MyICLRDebuggingLibraryProvider.cpp
+  MyICorDebugDataTarget.cpp
+  正在生成代码...
+d:\tr_hacker\mycheatlibrary\cheatlibrary\cheatlibrary.cpp(223): warning C4715: “ReadData”: 不是所有的控件路径都返回值
+    正在创建库 D:\TR_Hacker\MyCheatLibrary\x64\Debug\CheatLibrary.lib 和对象 D:\TR_Hacker\MyCheatLibrary\x64\Debug\CheatLibrary.exp
+  CheatLibrary.vcxproj -> D:\TR_Hacker\MyCheatLibrary\x64\Debug\CheatLibrary.dll
